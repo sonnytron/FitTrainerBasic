@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.widget.Button
 import android.widget.EditText
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.ExerciseActivity
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.R
 import org.jetbrains.anko.*
 import org.jetbrains.anko.cardview.v7.cardView
 import org.jetbrains.anko.recyclerview.v7.recyclerView
@@ -19,73 +20,26 @@ class ExerciseActivityUi: AnkoComponent<ExerciseActivity> {
         relativeLayout {
             cardView {
                 linearLayout {
+                    lparams(width = matchParent, height = wrapContent)
                     editExerciseText = editText {
-
+                        hint = owner.getString(R.string.exercise_edit_placeholder)
                     }
-
                     addExerciseButton = button {
+                        text = owner.getString(R.string.exercise_add_title)
+                        setOnClickListener {
 
+                        }
                     }
                 }
+            }.lparams(matchParent, height = wrapContent) {
+                margin = dip(8)
+                alignParentTop()
             }
-
             exerciseRecyclerView = recyclerView {
-
+                clipToPadding = false
+            }.lparams(width = matchParent, height = matchParent) {
+                setPadding(4, 36, 4, 4)
             }
         }
     }
 }
-
-/*
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.manijshrestha.todolist.ui.ToDoActivity">
-
-    <android.support.v7.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/task_et"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:hint="@string/task" />
-
-            <Button
-                android:id="@+id/add_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="8dp"
-                android:text="@string/add" />
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/tasks_rv"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:paddingTop="72dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_to_do" />
- */

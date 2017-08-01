@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="single_list_item_default_height">72dp</dimen>
+</resources>

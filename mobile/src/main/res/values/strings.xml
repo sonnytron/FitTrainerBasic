@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Fit Trainer Basic</string>
+    <string name="exercise_edit_placeholder">Exercise Name</string>
+    <string name="exercise_add_title">Add Exercise</string>
 </resources>
