@@ -26,6 +26,14 @@ abstract class GymAdapter<E> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         onBindInternalItemView(holder, position)
     }
 
+    fun setOnItemClickedListener(listener: (Int) -> Unit) {
+        this.clickListener = object : OnItemClickedListener {
+            override fun onItemClicked(position: Int) {
+                listener(position)
+            }
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return onCreateInternalItemViewHolder(parent, viewType)
     }

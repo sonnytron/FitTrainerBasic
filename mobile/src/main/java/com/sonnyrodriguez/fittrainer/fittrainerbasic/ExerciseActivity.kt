@@ -15,6 +15,8 @@ import com.sonnyrodriguez.fittrainer.fittrainerbasic.ui.ExerciseActivityUi
 import dagger.android.AndroidInjection
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.ctx
+import org.jetbrains.anko.setContentView
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class ExerciseActivity: AppCompatActivity(), ExercisePresenter {
@@ -27,15 +29,10 @@ class ExerciseActivity: AppCompatActivity(), ExercisePresenter {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateView(parent: View?, name: String?, context: Context?, attrs: AttributeSet?): View {
         ui = ExerciseActivityUi(exerciseAdapter) { exerciseSelected ->
             viewExerciseObject(exerciseSelected)
         }
-        return ui.createView(AnkoContext.Companion.create(ctx, this)).apply {
-            exerciseHelper.onCreate(this@ExerciseActivity)
-        }
+        ui.setContentView(this)
     }
 
     override fun onDestroy() {
@@ -49,6 +46,7 @@ class ExerciseActivity: AppCompatActivity(), ExercisePresenter {
 
     override fun exerciseAddedTo(position: Int) {
         exerciseAdapter.notifyItemChanged(position)
+        exerciseAdapter.notifyDataSetChanged()
     }
 
     override fun scrollTo(position: Int) {
@@ -61,6 +59,7 @@ class ExerciseActivity: AppCompatActivity(), ExercisePresenter {
 
     internal fun addNewExercise(title: String) {
         exerciseHelper.addNewExercise(title, MuscleGroup.CHEST.ordinal)
+        toast("Exercise Added! $title")
     }
 
 }
