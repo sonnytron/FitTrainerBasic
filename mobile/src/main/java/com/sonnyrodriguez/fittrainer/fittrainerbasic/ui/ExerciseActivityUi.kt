@@ -1,16 +1,17 @@
 package com.sonnyrodriguez.fittrainer.fittrainerbasic.ui
 
-import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.widget.Button
 import android.widget.EditText
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.ExerciseActivity
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.R
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.adapters.ExerciseAdapter
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.ExerciseObject
 import org.jetbrains.anko.*
 import org.jetbrains.anko.cardview.v7.cardView
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 
-class ExerciseActivityUi: AnkoComponent<ExerciseActivity> {
+class ExerciseActivityUi(val exerciseAdapter: ExerciseAdapter, val onExerciseSelected: (exerciseObject: ExerciseObject) -> Unit): AnkoComponent<ExerciseActivity> {
 
     lateinit var exerciseRecyclerView: RecyclerView
     lateinit var editExerciseText: EditText
@@ -27,7 +28,11 @@ class ExerciseActivityUi: AnkoComponent<ExerciseActivity> {
                     addExerciseButton = button {
                         text = owner.getString(R.string.exercise_add_title)
                         setOnClickListener {
-
+                            editExerciseText.text.let {
+                                if (it.isNotBlank()) {
+                                    owner.addNewExercise(it.toString())
+                                }
+                            }
                         }
                     }
                 }

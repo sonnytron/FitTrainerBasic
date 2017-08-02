@@ -9,7 +9,7 @@ import io.reactivex.Flowable
     @Query("select * from exercise")
     fun getAllExercises(): Flowable<List<ExerciseObject>>
 
-    @Query("select * from exercise where id = :p0")
+    @Query("select * from exercise where id = :id")
     fun findExerciseById(id: Long): ExerciseObject
 
     @Insert(onConflict = REPLACE)

@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
+apply plugin: 'kotlin-kapt'
+
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -28,8 +30,8 @@ dependencies {
     wearApp project(':wear')
     implementation 'com.google.android.gms:play-services-wearable:+'
     compile "android.arch.persistence.room:runtime:$rootProject.versions.arch_comp"
-    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.versions.arch_comp"
     kapt "android.arch.persistence.room:compiler:$rootProject.versions.arch_comp"
+    compile "android.arch.persistence.room:rxjava2:$rootProject.versions.arch_comp"
 
     compile "io.reactivex.rxjava2:rxjava:2.1.0"
     compile "io.reactivex.rxjava2:rxandroid:2.0.1"
