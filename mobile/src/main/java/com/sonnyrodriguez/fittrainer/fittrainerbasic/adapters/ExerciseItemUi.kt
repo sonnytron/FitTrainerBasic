@@ -12,7 +12,7 @@ class ExerciseItemUi: AnkoComponent<ViewGroup> {
             lparams(width = matchParent, height = dimen(R.dimen.single_list_item_default_height)) {
                 horizontalMargin = dip(16)
             }
-            textView(R.style.BasicListItemStyle) {
+            textView {
                 id = R.id.exercise_item_title
             }.lparams(width = matchParent, height = matchParent) {
                 leftMargin = dip(12)
