@@ -10,12 +10,11 @@ import org.jetbrains.anko.setContentView
 class ExerciseActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         ExerciseActivityUi().setContentView(this)
         val exerciseFragment = ExerciseFragment.newInstance()
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.container, exerciseFragment)
+            add(R.id.container, exerciseFragment)
         }.commit()
     }
 }

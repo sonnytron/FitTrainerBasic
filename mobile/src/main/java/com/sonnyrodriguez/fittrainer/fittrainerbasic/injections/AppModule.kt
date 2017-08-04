@@ -14,4 +14,5 @@ import dagger.Provides
             Room.databaseBuilder(context, ExerciseDatabase::class.java, DataConstants.exerciseDbName).build()
 
     @Provides fun providesExerciseDao(database: ExerciseDatabase) = database.exerciseDao()
+    @Provides fun providesWorkoutDao(database: ExerciseDatabase) = database.workoutDao()
 }

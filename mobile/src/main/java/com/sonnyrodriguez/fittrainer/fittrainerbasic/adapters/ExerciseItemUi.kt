@@ -15,7 +15,6 @@ class ExerciseItemUi: AnkoComponent<ViewGroup> {
             textView {
                 id = R.id.exercise_item_title
             }.lparams(width = matchParent, height = matchParent) {
-                leftMargin = dip(12)
                 gravity = Gravity.CENTER
             }
         }

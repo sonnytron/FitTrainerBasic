@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.R
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.adapters.ExerciseAdapter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.fragments.ExerciseFragment

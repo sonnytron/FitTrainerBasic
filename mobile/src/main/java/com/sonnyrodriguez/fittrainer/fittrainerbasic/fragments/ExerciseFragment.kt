@@ -19,7 +19,7 @@ import javax.inject.Inject
 class ExerciseFragment: Fragment(), ExercisePresenter {
     private lateinit var ui: ExerciseFragmentUi
 
-    internal val exerciseAdapter: ExerciseAdapter = ExerciseAdapter()
+    internal var exerciseAdapter: ExerciseAdapter = ExerciseAdapter()
 
     @Inject lateinit var exerciseHelper: ExercisePresenterHelper
 
@@ -27,16 +27,31 @@ class ExerciseFragment: Fragment(), ExercisePresenter {
         fun newInstance() = ExerciseFragment()
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
         AndroidSupportInjection.inject(this)
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         ui = ExerciseFragmentUi(exerciseAdapter)
-        return ui.createView(AnkoContext.Companion.create(ctx, this)).apply {
-            exerciseHelper.onCreate(this@ExerciseFragment)
-        }
+        exerciseHelper.onCreate(this)
+        return ui.createView(AnkoContext.Companion.create(ctx, this))
+    }
+
+    override fun onDestroy() {
+        exerciseHelper.onDestroy()
+        super.onDestroy()
+    }
+
+    override fun onResume() {
+        exerciseHelper.onCreate(this)
+        super.onResume()
     }
 
     override fun showExercises(exercises: List<ExerciseObject>) {
-        exerciseAdapter.changeAll(exercises)
+        exercises.forEach { exercise ->
+            exerciseAdapter.add(exercise)
+        }
     }
 
     override fun exerciseAddedTo(position: Int) {
@@ -48,6 +63,7 @@ class ExerciseFragment: Fragment(), ExercisePresenter {
     }
 
     internal fun addNewExercise(title: String) {
+        exerciseHelper.onCreate(this)
         exerciseHelper.addNewExercise(title, MuscleGroup.CHEST.ordinal)
     }
 }
