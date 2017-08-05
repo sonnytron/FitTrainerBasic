@@ -22,7 +22,7 @@ class FitTrainerApplication: Application(), HasSupportFragmentInjector {
 
     override fun onCreate() {
         super.onCreate()
-
+        instance = this
         dataComponent = DaggerDataComponent.builder().appModule(AppModule(applicationContext)).build()
 
         dataComponent.inject(this)

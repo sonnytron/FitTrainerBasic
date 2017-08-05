@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.fragments.ExerciseFragment
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.ui.ExerciseActivityUi
-import dagger.android.AndroidInjection
 import org.jetbrains.anko.setContentView
 
 class ExerciseActivity: AppCompatActivity() {

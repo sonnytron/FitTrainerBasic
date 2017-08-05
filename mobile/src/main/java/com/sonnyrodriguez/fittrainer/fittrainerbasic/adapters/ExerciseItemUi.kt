@@ -12,11 +12,19 @@ class ExerciseItemUi: AnkoComponent<ViewGroup> {
             lparams(width = matchParent, height = dimen(R.dimen.single_list_item_default_height)) {
                 horizontalMargin = dip(16)
             }
-            textView {
-                id = R.id.exercise_item_title
-            }.lparams(width = matchParent, height = matchParent) {
-                gravity = Gravity.CENTER
+            verticalLayout {
+                textView {
+                    id = R.id.exercise_item_title
+                }.lparams(width = matchParent, height = wrapContent) {
+                    gravity = Gravity.CENTER
+                }
+                textView {
+                    id = R.id.exercise_item_muscle
+                }.lparams(width = matchParent, height = wrapContent) {
+                    gravity = Gravity.BOTTOM
+                }
             }
+
         }
     }
 }

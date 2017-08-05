@@ -2,4 +2,13 @@
     <string name="app_name">Fit Trainer Basic</string>
     <string name="exercise_edit_placeholder">Exercise Name</string>
     <string name="exercise_add_title">Add Exercise</string>
+    <string name="muscle_chest">Pectoral</string>
+    <string name="muscle_back">Back</string>
+    <string name="muscle_quads">Quadriceps</string>
+    <string name="muscle_hams">Hamstrings</string>
+    <string name="muscle_calves">Calves</string>
+    <string name="muscle_biceps">Biceps</string>
+    <string name="muscle_shoulders">Shoulders</string>
+    <string name="muscle_abs">Abdominal</string>
+    <string name="muscle_triceps">Triceps</string>
 </resources>

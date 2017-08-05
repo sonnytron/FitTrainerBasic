@@ -35,7 +35,12 @@ class ExercisePresenterHelper @Inject constructor(val exerciseDao: ExerciseDao) 
                         presenter?.exerciseAddedTo(exercisePosition)
                         presenter?.scrollTo(exercisePosition)
                     }
+                    showTotalExercises()
                 }))
+
+    }
+
+    fun showTotalExercises() {
         presenter?.showExercises(exercises)
     }
 

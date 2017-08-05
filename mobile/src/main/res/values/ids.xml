@@ -1,5 +1,6 @@
 <resources>
     <item name="exercise_item_title" type="id" />
+    <item name="exercise_item_muscle" type="id" />
     <item name="exercise_add_layout" type="id" />
     <item name="exercise_recycler_view" type="id" />
     <item name="container" type="id" />

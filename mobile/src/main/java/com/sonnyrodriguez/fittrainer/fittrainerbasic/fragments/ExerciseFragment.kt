@@ -5,8 +5,10 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.adapters.ExerciseAdapter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.ExerciseObject
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.MuscleEnum
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.MuscleGroup
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.ExercisePresenter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.ExercisePresenterHelper
@@ -20,6 +22,7 @@ class ExerciseFragment: Fragment(), ExercisePresenter {
     private lateinit var ui: ExerciseFragmentUi
 
     internal var exerciseAdapter: ExerciseAdapter = ExerciseAdapter()
+    lateinit var muscleAdapter: ArrayAdapter<MuscleEnum>
 
     @Inject lateinit var exerciseHelper: ExercisePresenterHelper
 
@@ -34,8 +37,16 @@ class ExerciseFragment: Fragment(), ExercisePresenter {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         ui = ExerciseFragmentUi(exerciseAdapter)
-        exerciseHelper.onCreate(this)
-        return ui.createView(AnkoContext.Companion.create(ctx, this))
+        return ui.createView(AnkoContext.Companion.create(ctx, this)).apply {
+            exerciseHelper.onCreate(this@ExerciseFragment)
+            attachMuscleAdapter()
+        }
+    }
+
+    internal fun attachMuscleAdapter() {
+        muscleAdapter = ArrayAdapter(ctx, android.R.layout.simple_list_item_1, MuscleEnum.values()).apply {
+            ui.muscleSpinner.adapter = this
+        }
     }
 
     override fun onDestroy() {
@@ -44,14 +55,11 @@ class ExerciseFragment: Fragment(), ExercisePresenter {
     }
 
     override fun onResume() {
-        exerciseHelper.onCreate(this)
         super.onResume()
     }
 
     override fun showExercises(exercises: List<ExerciseObject>) {
-        exercises.forEach { exercise ->
-            exerciseAdapter.add(exercise)
-        }
+        exerciseAdapter.changeAll(exercises)
     }
 
     override fun exerciseAddedTo(position: Int) {
@@ -62,8 +70,7 @@ class ExerciseFragment: Fragment(), ExercisePresenter {
         ui.exerciseRecyclerView.smoothScrollToPosition(position)
     }
 
-    internal fun addNewExercise(title: String) {
-        exerciseHelper.onCreate(this)
-        exerciseHelper.addNewExercise(title, MuscleGroup.CHEST.ordinal)
+    internal fun addNewExercise(title: String, muscleIndex: Int) {
+        exerciseHelper.addNewExercise(title, muscleAdapter.getItem(muscleIndex).ordinal)
     }
 }
