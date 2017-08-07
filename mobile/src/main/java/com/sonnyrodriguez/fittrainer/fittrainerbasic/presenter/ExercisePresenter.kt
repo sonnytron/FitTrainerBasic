@@ -10,3 +10,7 @@ interface ExercisePresenter {
 
     fun scrollTo(position: Int)
 }
+
+interface SingleWorkoutPresenter {
+    fun showWorkoutExercises(exercises: List<ExerciseObject>)
+}

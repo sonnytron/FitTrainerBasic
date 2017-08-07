@@ -38,6 +38,7 @@ class ExerciseFragment: Fragment(), ExercisePresenter {
         ui = ExerciseFragmentUi(exerciseAdapter)
         return ui.createView(AnkoContext.Companion.create(ctx, this)).apply {
             exerciseHelper.onCreate(this@ExerciseFragment)
+            exerciseHelper.loadExercises()
             attachMuscleAdapter()
         }
     }

@@ -7,4 +7,8 @@
 
     <item name="workout_item_title" type="id" />
     <item name="workout_exercise_count" type="id" />
+
+    <!--    Workout Fragment Id's    -->
+    <item name="workout_recycler_view" type="id" />
+    <item name="workout_add_workout_button" type="id" />
 </resources>

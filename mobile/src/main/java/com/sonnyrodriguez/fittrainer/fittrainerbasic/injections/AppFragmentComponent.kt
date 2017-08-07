@@ -12,3 +12,7 @@ import dagger.android.AndroidInjector
 @Subcomponent interface WorkoutFragmentComponent: AndroidInjector<WorkoutFragment> {
     @Subcomponent.Builder abstract class Builder: AndroidInjector.Builder<WorkoutFragment>()
 }
+
+@Subcomponent interface EditWorkoutComponent: AndroidInjector<EditWorkoutComponent> {
+    @Subcomponent.Builder abstract class Builder: AndroidInjector.Builder<EditWorkoutComponent>()
+}

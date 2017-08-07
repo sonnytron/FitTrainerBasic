@@ -14,4 +14,8 @@
     
     <!-- Strings for UI Messages -->
     <string name="workout_exercise_count_label">%1$d Exercises</string>
+
+    <!--    Strings for Add Workout Story    -->
+    <string name="workout_add_button_title">Add Workout</string>
+    <string name="workout_title">Workouts</string>
 </resources>

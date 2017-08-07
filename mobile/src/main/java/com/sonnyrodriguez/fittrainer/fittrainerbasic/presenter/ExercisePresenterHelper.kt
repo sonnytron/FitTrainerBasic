@@ -2,6 +2,7 @@ package com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter
 
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.ExerciseDao
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.ExerciseObject
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutObject
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,7 +17,6 @@ class ExercisePresenterHelper @Inject constructor(val exerciseDao: ExerciseDao) 
 
     fun onCreate(exercisePresenter: ExercisePresenter) {
         presenter = exercisePresenter
-        loadExercises()
     }
 
     fun onDestroy() {
@@ -40,8 +40,23 @@ class ExercisePresenterHelper @Inject constructor(val exerciseDao: ExerciseDao) 
 
     }
 
+    fun loadExercisesForWorkout(workoutObject: WorkoutObject) {
+        val exerciseList = ArrayList<ExerciseObject>()
+        workoutObject.exerciseList.forEach { exerciseId ->
+            exerciseDao.findExerciseById(exerciseId).let {
+                exerciseList.add(it)
+            }
+        }.apply {
+            showWorkoutExercises(exerciseList)
+        }
+    }
+
     fun showTotalExercises() {
         presenter?.showExercises(exercises)
+    }
+
+    fun showWorkoutExercises(list: List<ExerciseObject>) {
+        presenter?.showExercises(list)
     }
 
     fun addNewExercise(exerciseTitle: String, muscleGroupNumber: Int) {
