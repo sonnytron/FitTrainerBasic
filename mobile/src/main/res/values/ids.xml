@@ -4,4 +4,7 @@
     <item name="exercise_add_layout" type="id" />
     <item name="exercise_recycler_view" type="id" />
     <item name="container" type="id" />
+
+    <item name="workout_item_title" type="id" />
+    <item name="workout_exercise_count" type="id" />
 </resources>

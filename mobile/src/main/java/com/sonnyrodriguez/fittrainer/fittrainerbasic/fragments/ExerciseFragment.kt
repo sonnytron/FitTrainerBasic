@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.adapters.ExerciseAdapter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.ExerciseObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.MuscleEnum
-import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.MuscleGroup
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.ExercisePresenter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.ExercisePresenterHelper
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.ui.ExerciseFragmentUi
