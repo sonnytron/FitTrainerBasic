@@ -5,7 +5,8 @@ import dagger.Component
 
 @Component(modules = arrayOf(AppModule::class,
         ExerciseModule::class,
-        WorkoutModule::class))
+        WorkoutModule::class,
+        EditWorkoutModule::class))
 interface DataComponent {
     fun inject(fitTrainerApplication: FitTrainerApplication)
 }

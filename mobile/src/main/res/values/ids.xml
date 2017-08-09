@@ -8,7 +8,17 @@
     <item name="workout_item_title" type="id" />
     <item name="workout_exercise_count" type="id" />
 
+    <!-- Common UI ID's -->
+    <item name="general_toolbar_id" type="id" />
+    <item name="general_toolbar_right" type="id" />
+    <item name="general_toolbar_left" type="id" />
+
     <!--    Workout Fragment Id's    -->
     <item name="workout_recycler_view" type="id" />
     <item name="workout_add_workout_button" type="id" />
+
+    <!--    Edit Workout Fragment Id's  -->
+    <item name="workout_title_edit" type="id" />
+    <item name="workout_exercise_recycler" type="id" />
+    <item name="workout_add_exercise_button" type="id" />
 </resources>

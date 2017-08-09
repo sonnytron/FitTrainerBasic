@@ -44,7 +44,7 @@ class ExerciseFragmentUi(val exerciseListAdapter: ExerciseAdapter): AnkoComponen
                 layoutManager = LinearLayoutManager(ctx, LinearLayoutManager.VERTICAL, false)
                 adapter = this@ExerciseFragmentUi.exerciseListAdapter.apply {
                     setOnItemClickedListener { position ->
-
+                        owner.exerciseSelected(exerciseListAdapter.getInternalItem(position))
                     }
                 }
             }.lparams(width = matchParent, height = matchParent)

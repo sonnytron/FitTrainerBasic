@@ -13,15 +13,21 @@ class WorkoutPresenterHelper @Inject constructor(val workoutDao: WorkoutDao) {
     var workoutList: ArrayList<WorkoutObject> = arrayListOf()
 
     var workoutPresenter: WorkoutPresenter? = null
+    var workoutSavePresenter: WorkoutSavePresenter? = null
 
     fun onCreate(presenter: WorkoutPresenter) {
         workoutPresenter = presenter
         loadWorkouts()
     }
 
+    fun onCreate(savePresenter: WorkoutSavePresenter) {
+        workoutSavePresenter = savePresenter
+    }
+
     fun onDestroy() {
         compositeDisposable.dispose()
         workoutPresenter = null
+        workoutSavePresenter = null
     }
 
     fun loadWorkouts() {
@@ -44,7 +50,9 @@ class WorkoutPresenterHelper @Inject constructor(val workoutDao: WorkoutDao) {
         compositeDisposable.add(Observable.fromCallable { workoutDao.insertWorkout(newWorkout) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe())
+                .subscribe{
+
+                })
     }
 
     fun updateWorkout(workoutObject: WorkoutObject) {

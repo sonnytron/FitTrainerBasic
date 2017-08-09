@@ -27,7 +27,7 @@ class WorkoutFragmentUi(val workoutListAdapter: WorkoutAdapter): AnkoComponent<W
                 layoutManager = LinearLayoutManager(ctx, LinearLayoutManager.VERTICAL, false)
                 adapter = this@WorkoutFragmentUi.workoutListAdapter.apply {
                     setOnItemClickedListener { position ->
-
+                        owner.editWorkout(workoutListAdapter.getInternalItem(position))
                     }
                 }
             }.lparams(width = matchParent, height = matchParent)

@@ -1,5 +1,6 @@
 package com.sonnyrodriguez.fittrainer.fittrainerbasic.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -43,6 +44,10 @@ class ExerciseFragment: Fragment(), ExercisePresenter {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
     internal fun attachMuscleAdapter() {
         muscleAdapter = ArrayAdapter(ctx, android.R.layout.simple_list_item_1, MuscleEnum.values()).apply {
             ui.muscleSpinner.adapter = this
@@ -58,8 +63,16 @@ class ExerciseFragment: Fragment(), ExercisePresenter {
         super.onResume()
     }
 
-    override fun showExercises(exercises: List<ExerciseObject>) {
+    override fun showTotalExercises(exercises: List<ExerciseObject>) {
         exerciseAdapter.changeAll(exercises)
+    }
+
+    override fun showWorkoutExercises(exercises: List<ExerciseObject>) {
+        // We don't need this
+    }
+
+    override fun returnExerciseFromSearch(exerciseObject: ExerciseObject) {
+        // We don't need this
     }
 
     override fun exerciseAddedTo(position: Int) {
@@ -72,5 +85,9 @@ class ExerciseFragment: Fragment(), ExercisePresenter {
 
     internal fun addNewExercise(title: String, muscleIndex: Int) {
         exerciseHelper.addNewExercise(title, muscleAdapter.getItem(muscleIndex).ordinal)
+    }
+
+    internal fun exerciseSelected(exerciseObject: ExerciseObject) {
+
     }
 }

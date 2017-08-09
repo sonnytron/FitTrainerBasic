@@ -52,11 +52,11 @@ class ExercisePresenterHelper @Inject constructor(val exerciseDao: ExerciseDao) 
     }
 
     fun showTotalExercises() {
-        presenter?.showExercises(exercises)
+        presenter?.showTotalExercises(exercises)
     }
 
     fun showWorkoutExercises(list: List<ExerciseObject>) {
-        presenter?.showExercises(list)
+        presenter?.showWorkoutExercises(list)
     }
 
     fun addNewExercise(exerciseTitle: String, muscleGroupNumber: Int) {
@@ -65,5 +65,11 @@ class ExercisePresenterHelper @Inject constructor(val exerciseDao: ExerciseDao) 
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe())
+    }
+
+    fun findExerciseById(exerciseId: Long) {
+        exerciseDao.findExerciseById(exerciseId).let {
+            presenter?.returnExerciseFromSearch(it)
+        }
     }
 }

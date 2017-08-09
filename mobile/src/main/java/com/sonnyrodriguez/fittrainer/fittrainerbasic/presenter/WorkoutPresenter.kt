@@ -13,3 +13,7 @@ interface WorkoutPresenter {
     fun workoutUpdatedAt(position: Int)
 
 }
+
+interface WorkoutSavePresenter {
+    fun workoutSaved()
+}

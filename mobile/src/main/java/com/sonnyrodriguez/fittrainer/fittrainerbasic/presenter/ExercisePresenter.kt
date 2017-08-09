@@ -4,11 +4,15 @@ import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.ExerciseObject
 
 interface ExercisePresenter {
 
-    fun showExercises(exercises: List<ExerciseObject>)
+    fun showTotalExercises(exercises: List<ExerciseObject>)
+
+    fun showWorkoutExercises(exercises: List<ExerciseObject>)
 
     fun exerciseAddedTo(position: Int)
 
     fun scrollTo(position: Int)
+
+    fun returnExerciseFromSearch(exerciseObject: ExerciseObject)
 }
 
 interface SingleWorkoutPresenter {
