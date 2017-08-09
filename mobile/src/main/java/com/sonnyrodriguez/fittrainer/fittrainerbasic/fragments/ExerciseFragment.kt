@@ -67,8 +67,8 @@ class ExerciseFragment: Fragment(), ExercisePresenter {
         exerciseAdapter.changeAll(exercises)
     }
 
-    override fun returnWorkoutExercise(exerciseObject: ExerciseObject) {
-        // We don't need this
+    override fun returnWorkoutExercise(workoutExercises: List<ExerciseObject>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun returnExerciseFromSearch(exerciseObject: ExerciseObject) {

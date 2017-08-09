@@ -51,7 +51,7 @@ class WorkoutPresenterHelper @Inject constructor(val workoutDao: WorkoutDao) {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe{
-
+                    workoutSavePresenter?.workoutSaved()
                 })
     }
 
@@ -59,6 +59,8 @@ class WorkoutPresenterHelper @Inject constructor(val workoutDao: WorkoutDao) {
         compositeDisposable.add(Observable.fromCallable { workoutDao.updateWorkout(workoutObject) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe())
+                .subscribe{
+                    workoutSavePresenter?.workoutSaved()
+                })
     }
 }

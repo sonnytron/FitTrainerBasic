@@ -25,47 +25,43 @@ class EditWorkoutFragmentUi(val exerciseAdapter: ExerciseAdapter): AnkoComponent
     internal var workoutTitle: String = "Unnamed Workout"
 
     override fun createView(ui: AnkoContext<EditWorkoutFragment>) = with(ui) {
-        coordinatorLayout {
-            appBarLayout {
-                toolbar {
-                    id = R.id.general_toolbar_id
-                    setTitleTextColor(Color.WHITE)
-                    setTitle(R.string.workout_fragment_title)
-                }.lparams(width = matchParent, height = matchParent)
-
+        verticalLayout {
+            lparams(width = matchParent, height = wrapContent)
+            verticalLayout {
+                workoutTitleEditText = editText {
+                    id = R.id.workout_title_edit
+                    hint = owner.getString(R.string.workout_edit_text_hint)
+                }.lparams(width = matchParent, height = wrapContent) {
+                    margin = dip(8)
+                }
                 button(R.string.common_save) {
                     setOnClickListener {
                         owner.saveWorkoutAndExit()
                     }
+                }.lparams(width = matchParent, height = wrapContent) {
+                    margin = dip(8)
                 }
-            }.lparams(width = matchParent)
-            linearLayout {
-                textInputLayout {
-                    workoutTitleEditText = editText {
-                        id = R.id.workout_title_edit
-                        hint = owner.getString(R.string.workout_edit_text_hint)
-                    }
-                }.lparams(width = matchParent, height = wrapContent)
             }.lparams(width = matchParent, height = wrapContent)
+            coordinatorLayout {
+                exerciseRecyclerView = recyclerView {
+                    id = R.id.workout_exercise_recycler
+                    clipToPadding = false
+                    layoutManager = LinearLayoutManager(ctx, LinearLayoutManager.VERTICAL, false)
+                    adapter = this@EditWorkoutFragmentUi.exerciseAdapter
+                }.lparams(width = matchParent, height = matchParent)
 
-            exerciseRecyclerView = recyclerView {
-                id = R.id.workout_exercise_recycler
-                clipToPadding = false
-                layoutManager = LinearLayoutManager(ctx, LinearLayoutManager.VERTICAL, false)
-                adapter = this@EditWorkoutFragmentUi.exerciseAdapter
-            }.lparams(width = matchParent, height = matchParent)
-
-            addExerciseButton = floatingActionButton {
-                id = R.id.workout_add_exercise_button
-                setImageResource(R.drawable.icon_add_circle_black)
-                setOnClickListener {
-                    owner.addNewExercise()
+                addExerciseButton = floatingActionButton {
+                    id = R.id.workout_add_exercise_button
+                    setImageResource(R.drawable.icon_add_circle_black)
+                    setOnClickListener {
+                        owner.addNewExercise()
+                    }
+                }.lparams(width = wrapContent, height = wrapContent) {
+                    gravity = Gravity.BOTTOM or Gravity.END
+                    margin = dip(16)
+                    anchorId = R.id.workout_exercise_recycler
+                    anchorGravity = Gravity.BOTTOM or Gravity.END
                 }
-            }.lparams(width = wrapContent, height = wrapContent) {
-                gravity = Gravity.BOTTOM or Gravity.END
-                margin = dip(16)
-                anchorId = R.id.workout_exercise_recycler
-                anchorGravity = Gravity.BOTTOM or Gravity.END
             }
         }
     }

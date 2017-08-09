@@ -38,7 +38,6 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
         fun newInstance(workoutObject: WorkoutObject?) = EditWorkoutFragment().apply {
             workoutObject?.let {
                 localWorkout = it
-                getExercises(it)
             }
         }
     }
@@ -56,6 +55,7 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
             exerciseHelper.loadExercises()
             localWorkout?.let {
                 ui.workoutTitle = it.title
+                getExercises(it)
             }
         }
     }
@@ -80,9 +80,8 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
         }
     }
 
-    override fun returnWorkoutExercise(exerciseObject: ExerciseObject) {
-        exerciseList.add(exerciseObject)
-        exerciseAdapter.add(exerciseObject, true)
+    override fun returnWorkoutExercise(workoutExercises: List<ExerciseObject>) {
+        exerciseAdapter.changeAll(workoutExercises)
     }
 
     override fun exerciseAddedTo(position: Int) {

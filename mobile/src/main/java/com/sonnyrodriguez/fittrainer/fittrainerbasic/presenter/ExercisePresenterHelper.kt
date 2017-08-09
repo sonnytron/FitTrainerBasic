@@ -41,13 +41,12 @@ class ExercisePresenterHelper @Inject constructor(val exerciseDao: ExerciseDao) 
     }
 
     fun loadExercisesForWorkout(workoutObject: WorkoutObject) {
-        workoutObject.exerciseList.forEach { exerciseId ->
-            compositeDisposable.add(Observable.fromCallable { exerciseDao.findExerciseById(exerciseId) }
-                    .subscribeOn(Schedulers.io())
-                    .subscribe { exerciseObj ->
-                        presenter?.returnWorkoutExercise(exerciseObj)
-                    })
-        }
+        compositeDisposable.add(exerciseDao.findExercisesByIds(workoutObject.exerciseList.toTypedArray())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    presenter?.returnWorkoutExercise(it)
+                }))
     }
 
     fun showTotalExercises() {

@@ -12,6 +12,9 @@ import io.reactivex.Flowable
     @Query("select * from exercise where id = :id")
     fun findExerciseById(id: Long): ExerciseObject
 
+    @Query("select * from exercise where id in (:userIds)")
+    fun findExercisesByIds(userIds: Array<Long>): Flowable<List<ExerciseObject>>
+
     @Insert(onConflict = REPLACE)
     fun insertExercise(exerciseObject: ExerciseObject)
 
@@ -20,5 +23,10 @@ import io.reactivex.Flowable
 
     @Delete
     fun deleteExercise(exerciseObject: ExerciseObject)
+
+    /*
+        @Query("SELECT * FROM user WHERE uid IN(:userIds)")
+     public abstract List findByIds(int[] userIds);
+     */
 
 }
