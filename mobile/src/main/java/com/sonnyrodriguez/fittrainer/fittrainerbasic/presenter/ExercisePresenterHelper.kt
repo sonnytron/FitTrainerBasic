@@ -41,22 +41,17 @@ class ExercisePresenterHelper @Inject constructor(val exerciseDao: ExerciseDao) 
     }
 
     fun loadExercisesForWorkout(workoutObject: WorkoutObject) {
-        val exerciseList = ArrayList<ExerciseObject>()
         workoutObject.exerciseList.forEach { exerciseId ->
-            exerciseDao.findExerciseById(exerciseId).let {
-                exerciseList.add(it)
-            }
-        }.apply {
-            showWorkoutExercises(exerciseList)
+            compositeDisposable.add(Observable.fromCallable { exerciseDao.findExerciseById(exerciseId) }
+                    .subscribeOn(Schedulers.io())
+                    .subscribe { exerciseObj ->
+                        presenter?.returnWorkoutExercise(exerciseObj)
+                    })
         }
     }
 
     fun showTotalExercises() {
         presenter?.showTotalExercises(exercises)
-    }
-
-    fun showWorkoutExercises(list: List<ExerciseObject>) {
-        presenter?.showWorkoutExercises(list)
     }
 
     fun addNewExercise(exerciseTitle: String, muscleGroupNumber: Int) {
@@ -68,8 +63,10 @@ class ExercisePresenterHelper @Inject constructor(val exerciseDao: ExerciseDao) 
     }
 
     fun findExerciseById(exerciseId: Long) {
-        exerciseDao.findExerciseById(exerciseId).let {
-            presenter?.returnExerciseFromSearch(it)
-        }
+        compositeDisposable.add(Observable.fromCallable { exerciseDao.findExerciseById(exerciseId) }
+                .subscribeOn(Schedulers.io())
+                .subscribe { exerciseObj ->
+                    presenter?.returnExerciseFromSearch(exerciseObj)
+                })
     }
 }

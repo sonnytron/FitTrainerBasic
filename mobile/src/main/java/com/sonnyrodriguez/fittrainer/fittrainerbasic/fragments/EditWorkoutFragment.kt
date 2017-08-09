@@ -7,9 +7,11 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.adapters.ExerciseAdapter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.ExerciseObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.addFragment
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.ExerciseFactory
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.ExercisePresenter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.ExercisePresenterHelper
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.WorkoutPresenterHelper
@@ -20,6 +22,7 @@ import com.sonnyrodriguez.fittrainer.fittrainerbasic.values.RequestConstants
 import dagger.android.support.AndroidSupportInjection
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.support.v4.ctx
+import org.jetbrains.anko.support.v4.toast
 import javax.inject.Inject
 
 class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
@@ -29,6 +32,7 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
     internal var exerciseList: ArrayList<ExerciseObject> = arrayListOf()
     internal var totalExerciseList: ArrayList<ExerciseObject> = arrayListOf()
     internal var localWorkout: WorkoutObject? = null
+    internal val exerciseAdapter = ExerciseAdapter()
 
     companion object {
         fun newInstance(workoutObject: WorkoutObject?) = EditWorkoutFragment().apply {
@@ -45,10 +49,11 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        ui = EditWorkoutFragmentUi()
+        ui = EditWorkoutFragmentUi(exerciseAdapter)
         return ui.createView(AnkoContext.Companion.create(ctx, this)).apply {
             exerciseHelper.onCreate(this@EditWorkoutFragment)
             workoutHelper.onCreate(this@EditWorkoutFragment)
+            exerciseHelper.loadExercises()
             localWorkout?.let {
                 ui.workoutTitle = it.title
             }
@@ -60,13 +65,24 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
     }
 
     override fun showTotalExercises(exercises: List<ExerciseObject>) {
-        totalExerciseList.clear()
-        totalExerciseList.addAll(exercises)
+        if (exercises.count() == 0) {
+            toast("Exercises List was empty! Creating default exercises.")
+            buildDefaultExercises()
+        } else {
+            totalExerciseList.clear()
+            totalExerciseList.addAll(exercises)
+        }
     }
 
-    override fun showWorkoutExercises(exercises: List<ExerciseObject>) {
-        exerciseList.clear()
-        exerciseList.addAll(exercises)
+    internal fun buildDefaultExercises() {
+        ExerciseFactory.defaultExercises().forEach {
+            exerciseHelper.addNewExercise(it.title, it.muscleGroupNumber)
+        }
+    }
+
+    override fun returnWorkoutExercise(exerciseObject: ExerciseObject) {
+        exerciseList.add(exerciseObject)
+        exerciseAdapter.add(exerciseObject, true)
     }
 
     override fun exerciseAddedTo(position: Int) {

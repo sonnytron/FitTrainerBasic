@@ -67,7 +67,7 @@ class ExerciseFragment: Fragment(), ExercisePresenter {
         exerciseAdapter.changeAll(exercises)
     }
 
-    override fun showWorkoutExercises(exercises: List<ExerciseObject>) {
+    override fun returnWorkoutExercise(exerciseObject: ExerciseObject) {
         // We don't need this
     }
 

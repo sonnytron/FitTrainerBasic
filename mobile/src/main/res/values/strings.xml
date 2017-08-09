@@ -21,4 +21,14 @@
     <string name="workout_title">Workouts</string>
     <string name="workout_fragment_title">Edit Workout</string>
     <string name="workout_edit_text_hint">Enter Workout Title</string>
+
+    <!--    Default Exercise Titles     -->
+    <string name="default_exercise_one">Push Up</string>
+    <string name="default_exercise_two">Barbell Bench Press</string>
+    <string name="default_exercise_three">Barbell Squat</string>
+    <string name="default_exercise_four">Preacher Curl</string>
+    <string name="default_exercise_five">Barbell Deadlift</string>
+    <string name="default_exercise_six">Dumbbell Hammer Curl</string>
+    <string name="default_exercise_seven">Close-grip Barbell Bench Press</string>
+    <string name="default_exercise_eight">Dumbbell Row</string>
 </resources>

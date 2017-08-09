@@ -6,7 +6,7 @@ interface ExercisePresenter {
 
     fun showTotalExercises(exercises: List<ExerciseObject>)
 
-    fun showWorkoutExercises(exercises: List<ExerciseObject>)
+    fun returnWorkoutExercise(exerciseObject: ExerciseObject)
 
     fun exerciseAddedTo(position: Int)
 

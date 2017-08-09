@@ -1,9 +1,6 @@
 package com.sonnyrodriguez.fittrainer.fittrainerbasic.database
 
 import android.arch.persistence.room.*
-import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.MuscleEnum
-import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.MuscleGroup
-import java.util.*
 
 @Entity(tableName = "exercise")
 data class ExerciseObject(@ColumnInfo(name = "exercise_title") var title: String,
