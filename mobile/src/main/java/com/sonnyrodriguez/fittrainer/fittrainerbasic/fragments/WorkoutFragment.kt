@@ -3,6 +3,7 @@ package com.sonnyrodriguez.fittrainer.fittrainerbasic.fragments
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -56,7 +57,7 @@ class WorkoutFragment: Fragment(), WorkoutPresenter {
     }
 
     internal fun editWorkout(workoutObject: WorkoutObject) {
-        addFragment(EditWorkoutFragment.newInstance(workoutObject))
+        addFragment(EditWorkoutFragment.newInstance(workoutObject), RequestConstants.ADD_WORKOUT_CONSTANT)
     }
 
     override fun scrollTo(position: Int) {

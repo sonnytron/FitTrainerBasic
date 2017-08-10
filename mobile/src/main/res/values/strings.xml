@@ -31,4 +31,9 @@
     <string name="default_exercise_six">Dumbbell Hammer Curl</string>
     <string name="default_exercise_seven">Close-grip Barbell Bench Press</string>
     <string name="default_exercise_eight">Dumbbell Row</string>
+
+    <!--    Navigation Titles           -->
+    <string name="navigation_exercise_title">Exercises</string>
+    <string name="navigation_workout_title">Workouts</string>
+    <string name="navigation_stats_title">Stats</string>
 </resources>

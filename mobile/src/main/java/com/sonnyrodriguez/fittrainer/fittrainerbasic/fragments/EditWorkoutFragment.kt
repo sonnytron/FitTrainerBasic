@@ -29,7 +29,6 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
     lateinit var ui: EditWorkoutFragmentUi
     @Inject lateinit var exerciseHelper: ExercisePresenterHelper
     @Inject lateinit var workoutHelper: WorkoutPresenterHelper
-    internal var exerciseList: ArrayList<ExerciseObject> = arrayListOf()
     internal var totalExerciseList: ArrayList<ExerciseObject> = arrayListOf()
     internal var localWorkout: WorkoutObject? = null
     internal val exerciseAdapter = ExerciseAdapter()
@@ -54,6 +53,7 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
             workoutHelper.onCreate(this@EditWorkoutFragment)
             exerciseHelper.loadExercises()
             localWorkout?.let {
+                ui.updateUi(it)
                 ui.workoutTitle = it.title
                 getExercises(it)
             }
@@ -101,10 +101,7 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
     }
 
     override fun returnExerciseFromSearch(exerciseObject: ExerciseObject) {
-        exerciseList.add(exerciseObject)
-        localWorkout?.let {
-            it.exerciseList = exerciseList.map { it.id }
-        }
+        exerciseAdapter.add(exerciseObject, true)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -138,10 +135,11 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
 
     internal fun saveWorkoutAndExit() {
         if (localWorkout == null) {
-            workoutHelper.addNewWorkout(ui.protectedWorkoutTitle(), exerciseList.map { it.id })
+            workoutHelper.addNewWorkout(ui.protectedWorkoutTitle(), exerciseAdapter.internalItemList.map { it.id })
         } else {
             localWorkout?.let {
                 it.title = ui.protectedWorkoutTitle()
+                it.exerciseList = exerciseAdapter.internalItemList.map { it.id }
                 workoutHelper.updateWorkout(it)
             }
         }

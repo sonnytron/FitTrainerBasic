@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <item name="exercise_item_title" type="id" />
     <item name="exercise_item_muscle" type="id" />
@@ -21,4 +22,10 @@
     <item name="workout_title_edit" type="id" />
     <item name="workout_exercise_recycler" type="id" />
     <item name="workout_add_exercise_button" type="id" />
+
+    <!--    Bottom Navigation Id's  -->
+    <item name="navigation_menu" type="id" />
+    <item name="navigation_exercises_item" type="id" />
+    <item name="navigation_workouts_item" type="id" />
+    <item name="navigation_stats_item" type="id" />
 </resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@id/navigation_exercises_item"
+        android:enabled="true"
+        android:icon="@drawable/icon_dumbbell_black"
+        android:title="@string/navigation_exercise_title"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@id/navigation_workouts_item"
+        android:enabled="true"
+        android:icon="@drawable/icon_running_black"
+        android:title="@string/navigation_workout_title"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@id/navigation_stats_item"
+        android:enabled="true"
+        android:icon="@drawable/icon_chart_black"
+        android:title="@string/navigation_stats_title"
+        app:showAsAction="ifRoom"
+        />
+</menu>

@@ -8,6 +8,7 @@ import android.view.Gravity
 import android.widget.EditText
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.R
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.adapters.ExerciseAdapter
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.fragments.EditWorkoutFragment
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
@@ -64,6 +65,10 @@ class EditWorkoutFragmentUi(val exerciseAdapter: ExerciseAdapter): AnkoComponent
                 }
             }
         }
+    }
+
+    internal fun updateUi(workoutObject: WorkoutObject) {
+        workoutTitleEditText.setText(workoutObject.title)
     }
 
     internal fun protectedWorkoutTitle(): String =
