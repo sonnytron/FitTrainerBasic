@@ -15,7 +15,6 @@ import org.jetbrains.anko.recyclerview.v7.recyclerView
 class WorkoutFragmentUi(val workoutListAdapter: WorkoutAdapter): AnkoComponent<WorkoutFragment> {
 
     lateinit var workoutRecyclerView: RecyclerView
-    lateinit var addWorkoutButton: FloatingActionButton
 
     override fun createView(ui: AnkoContext<WorkoutFragment>) = with(ui) {
 
@@ -32,7 +31,7 @@ class WorkoutFragmentUi(val workoutListAdapter: WorkoutAdapter): AnkoComponent<W
                 }
             }.lparams(width = matchParent, height = matchParent)
 
-            addWorkoutButton = floatingActionButton {
+            floatingActionButton {
                 id = R.id.workout_add_workout_button
                 setImageResource(R.drawable.icon_add_circle_black)
                 setOnClickListener {
