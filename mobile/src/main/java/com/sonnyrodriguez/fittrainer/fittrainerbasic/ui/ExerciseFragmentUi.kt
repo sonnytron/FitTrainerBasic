@@ -41,7 +41,7 @@ class ExerciseFragmentUi(val exerciseListAdapter: ExerciseAdapter): AnkoComponen
             }.lparams(width = wrapContent, height = wrapContent) {
                 gravity = Gravity.BOTTOM or Gravity.END
                 margin = dip(16)
-                anchorId = R.id.workout_recycler_view
+                anchorId = R.id.exercise_recycler_view
                 anchorGravity = Gravity.BOTTOM or Gravity.END
             }
         }

@@ -14,7 +14,3 @@ interface ExercisePresenter {
 
     fun returnExerciseFromSearch(exerciseObject: ExerciseObject)
 }
-
-interface SingleWorkoutPresenter {
-    fun showWorkoutExercises(exercises: List<ExerciseObject>)
-}

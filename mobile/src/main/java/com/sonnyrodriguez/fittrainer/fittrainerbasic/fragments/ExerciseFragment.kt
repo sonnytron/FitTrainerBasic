@@ -1,16 +1,15 @@
 package com.sonnyrodriguez.fittrainer.fittrainerbasic.fragments
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.adapters.ExerciseAdapter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.ExerciseObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.addFragment
-import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.MuscleEnum
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.ExercisePresenter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.ExercisePresenterHelper
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.ui.ExerciseFragmentUi
@@ -47,6 +46,19 @@ class ExerciseFragment: Fragment(), ExercisePresenter {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            data?.run {
+                when (requestCode) {
+                    RequestConstants.EDIT_EXERCISE_CONSTANT,
+                    RequestConstants.NEW_EXERCISE_CONSTANT -> {
+                        exerciseHelper.loadExercises()
+                    }
+                    else -> {
+
+                    }
+                }
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -79,7 +91,7 @@ class ExerciseFragment: Fragment(), ExercisePresenter {
     }
 
     internal fun exerciseSelected(exerciseObject: ExerciseObject) {
-
+        addFragment(EditExerciseFragment.newInstance(exerciseObject), RequestConstants.EDIT_EXERCISE_CONSTANT)
     }
 
     internal fun addNewExercise() {

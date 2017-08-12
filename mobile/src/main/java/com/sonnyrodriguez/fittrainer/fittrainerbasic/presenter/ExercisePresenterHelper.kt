@@ -14,14 +14,20 @@ class ExercisePresenterHelper @Inject constructor(val exerciseDao: ExerciseDao) 
     val exercises = ArrayList<ExerciseObject>()
 
     var presenter: ExercisePresenter? = null
+    var singlePresenter: SingleExercisePresenter? = null
 
     fun onCreate(exercisePresenter: ExercisePresenter) {
         presenter = exercisePresenter
     }
 
+    fun onCreate(singleExercisePresenter: SingleExercisePresenter) {
+        singlePresenter = singleExercisePresenter
+    }
+
     fun onDestroy() {
         compositeDisposable.dispose()
         presenter = null
+        singlePresenter = null
     }
 
     fun loadExercises() {
@@ -59,6 +65,24 @@ class ExercisePresenterHelper @Inject constructor(val exerciseDao: ExerciseDao) 
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe())
+    }
+
+    fun addNewExercise(exerciseObject: ExerciseObject) {
+        compositeDisposable.add(Observable.fromCallable { exerciseDao.insertExercise(exerciseObject) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    singlePresenter?.singleExerciseSaved()
+                })
+    }
+
+    fun saveSingleExercise(exerciseObject: ExerciseObject) {
+        compositeDisposable.add(Observable.fromCallable { exerciseDao.updateExercise(exerciseObject) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    singlePresenter?.singleExerciseSaved()
+                })
     }
 
     fun findExerciseById(exerciseId: Long) {

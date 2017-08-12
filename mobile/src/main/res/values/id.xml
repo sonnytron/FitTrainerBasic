@@ -24,6 +24,11 @@
     <item name="workout_exercise_recycler" type="id" />
     <item name="workout_add_exercise_button" type="id" />
 
+    <!--    Edit Exercise Fragment  -->
+    <item name="exercise_edit_title" type="id"/>
+    <item name="exercise_edit_spinner" type="id"/>
+    <item name="exercise_edit_save" type="id"/>
+
     <!--    Bottom Navigation Id's  -->
     <item name="navigation_menu" type="id" />
     <item name="navigation_exercises_item" type="id" />
