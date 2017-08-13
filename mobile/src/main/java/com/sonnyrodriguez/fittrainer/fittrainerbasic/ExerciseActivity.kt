@@ -5,6 +5,7 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.fragments.ExerciseFragment
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.fragments.StatsFragment
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.fragments.WorkoutFragment
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.NavPosition
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.active
@@ -67,8 +68,11 @@ class ExerciseActivity: AppCompatActivity(), BottomNavigationView.OnNavigationIt
     }
 
     fun loadStatsFragment(): Boolean {
-        toast("Stats Fragment Not Implemented Yet, Check in Soon!")
-        return loadExerciseFragment()
+        val statsFragment = StatsFragment.newInstance()
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.container, statsFragment)
+        }.commit()
+        return true
     }
 
     internal fun restoreSavedInstanceState(savedInstanceState: Bundle?) {

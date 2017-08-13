@@ -60,6 +60,7 @@ class EditExerciseFragment: Fragment(), SingleExercisePresenter {
                     }
                 }
             }
+            exercisePresenterHelper.onCreate(this@EditExerciseFragment)
         }
     }
 
