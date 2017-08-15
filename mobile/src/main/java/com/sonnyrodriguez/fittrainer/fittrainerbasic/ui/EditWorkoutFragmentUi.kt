@@ -8,6 +8,7 @@ import android.view.Gravity
 import android.widget.EditText
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.R
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.adapters.ExerciseAdapter
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.adapters.ExerciseCountAdapter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.fragments.EditWorkoutFragment
 import org.jetbrains.anko.*
@@ -18,7 +19,7 @@ import org.jetbrains.anko.design.floatingActionButton
 import org.jetbrains.anko.design.textInputLayout
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 
-class EditWorkoutFragmentUi(val exerciseAdapter: ExerciseAdapter): AnkoComponent<EditWorkoutFragment> {
+class EditWorkoutFragmentUi(val exerciseCountAdapter: ExerciseCountAdapter): AnkoComponent<EditWorkoutFragment> {
 
     lateinit var exerciseRecyclerView: RecyclerView
     lateinit var workoutTitleEditText: EditText
@@ -48,7 +49,7 @@ class EditWorkoutFragmentUi(val exerciseAdapter: ExerciseAdapter): AnkoComponent
                     id = R.id.workout_exercise_recycler
                     clipToPadding = false
                     layoutManager = LinearLayoutManager(ctx, LinearLayoutManager.VERTICAL, false)
-                    adapter = this@EditWorkoutFragmentUi.exerciseAdapter
+                    adapter = this@EditWorkoutFragmentUi.exerciseCountAdapter
                 }.lparams(width = matchParent, height = matchParent)
 
                 addExerciseButton = floatingActionButton {

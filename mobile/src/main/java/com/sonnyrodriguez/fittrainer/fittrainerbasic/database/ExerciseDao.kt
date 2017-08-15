@@ -23,10 +23,4 @@ import io.reactivex.Flowable
 
     @Delete
     fun deleteExercise(exerciseObject: ExerciseObject)
-
-    /*
-        @Query("SELECT * FROM user WHERE uid IN(:userIds)")
-     public abstract List findByIds(int[] userIds);
-     */
-
 }

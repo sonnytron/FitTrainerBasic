@@ -45,8 +45,8 @@ class WorkoutPresenterHelper @Inject constructor(val workoutDao: WorkoutDao) {
                 })
     }
 
-    fun addNewWorkout(title: String, exerciseLongList: List<Long>) {
-        val newWorkout = WorkoutObject(title, exerciseLongList)
+    fun addNewWorkout(title: String, exerciseMap: LinkedHashMap<Long, Long>) {
+        val newWorkout = WorkoutObject(title, exerciseMap)
         compositeDisposable.add(Observable.fromCallable { workoutDao.insertWorkout(newWorkout) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

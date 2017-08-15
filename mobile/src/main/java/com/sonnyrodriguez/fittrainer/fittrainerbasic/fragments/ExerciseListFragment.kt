@@ -17,6 +17,8 @@ import org.jetbrains.anko.support.v4.ctx
 class ExerciseListFragment: Fragment() {
 
     lateinit internal var ui: ExerciseListFragmentUi
+    internal var exerciseCount = 8
+    // TODO: Add plus and minus button to Exercise List Fragment
 
     internal var exerciseAdapter: ExerciseAdapter = ExerciseAdapter()
 
@@ -28,13 +30,33 @@ class ExerciseListFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         ui = ExerciseListFragmentUi(exerciseAdapter)
-        return ui.createView(AnkoContext.Companion.create(ctx, this))
+        return ui.createView(AnkoContext.Companion.create(ctx, this)).apply {
+            ui.countTextView.text = exerciseCount.toString()
+        }
     }
 
-    internal fun exerciseSelected(exerciseId: Long) {
+    // TODO: Add long for count to target fragment activity result
+
+    internal fun decreaseCount() {
+        if (exerciseCount > 0) {
+            exerciseCount--
+            ui.countTextView.text = exerciseCount.toString()
+        }
+    }
+
+    internal fun increaseCount() {
+        if (exerciseCount < 65) {
+            exerciseCount++
+            ui.countTextView.text = exerciseCount.toString()
+        }
+    }
+
+    internal fun exerciseSelected(exerciseObject: ExerciseObject) {
         targetFragment?.let { targetFrag ->
             val intent = Intent()
-            intent.putExtra(KeyConstants.KEY_RESULT_LONG, exerciseId)
+            intent.putExtra(KeyConstants.KEY_RESULT_KEY_LONG, exerciseObject.id)
+            intent.putExtra(KeyConstants.KEY_RESULT_LONG, exerciseCount)
+            intent.putExtra(KeyConstants.KEY_RESULT_TEXT, exerciseObject.title)
             targetFrag.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent)
             fragmentManager.popBackStack()
         }

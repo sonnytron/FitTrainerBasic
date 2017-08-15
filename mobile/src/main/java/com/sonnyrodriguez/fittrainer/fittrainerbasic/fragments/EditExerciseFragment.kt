@@ -8,9 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.BaseAdapter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.ExerciseObject
-import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.GymAdapter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.MuscleEnum
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.ExercisePresenterHelper
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.SingleExercisePresenter

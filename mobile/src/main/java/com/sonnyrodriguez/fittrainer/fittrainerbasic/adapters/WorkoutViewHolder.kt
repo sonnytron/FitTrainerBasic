@@ -14,6 +14,6 @@ class WorkoutViewHolder(itemView: ViewGroup) : RecyclerView.ViewHolder(itemView)
 
     fun bind(workoutObject: WorkoutObject) {
         workoutTitle.text = workoutObject.title
-        exerciseCount.text = FitTrainerApplication.instance.getString(R.string.workout_exercise_count_label, workoutObject.exerciseList.count())
+        exerciseCount.text = FitTrainerApplication.instance.getString(R.string.workout_exercise_count_label, workoutObject.exerciseMap.size)
     }
 }

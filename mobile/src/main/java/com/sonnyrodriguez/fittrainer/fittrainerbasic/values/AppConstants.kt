@@ -18,6 +18,7 @@ class RequestConstants {
 class KeyConstants {
     companion object {
         const val KEY_RESULT_TEXT = "keyResultText"
+        const val KEY_RESULT_KEY_LONG = "keyResultKeyLong"
         const val KEY_RESULT_LONG = "keyResultLong"
         const val KEY_RESULT_BOOLEAN = "keyResultBoolean"
     }

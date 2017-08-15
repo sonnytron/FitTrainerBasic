@@ -23,6 +23,15 @@
     <item name="workout_title_edit" type="id" />
     <item name="workout_exercise_recycler" type="id" />
     <item name="workout_add_exercise_button" type="id" />
+    <item name="exercise_count_item_title" type="id" />
+    <item name="exercise_count_item_muscle" type="id" />
+    <item name="exercise_count_item_count" type="id" />
+
+    <!--    Exercise List Fragment Id's     -->
+    <item name="add_exercise_recycler_view" type="id" />
+    <item name="add_exercise_plus_button" type="id" />
+    <item name="add_exercise_minus_button" type="id" />
+    <item name="add_exercise_container" type="id" />
 
     <!--    Edit Exercise Fragment  -->
     <item name="exercise_edit_title" type="id"/>
