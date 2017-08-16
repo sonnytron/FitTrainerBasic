@@ -20,6 +20,7 @@ class KeyConstants {
         const val KEY_RESULT_TEXT = "keyResultText"
         const val KEY_RESULT_KEY_LONG = "keyResultKeyLong"
         const val KEY_RESULT_LONG = "keyResultLong"
+        const val KEY_RESULT_SET = "keyResultSet"
         const val KEY_RESULT_BOOLEAN = "keyResultBoolean"
     }
 }

@@ -21,6 +21,8 @@
     <string name="workout_title">Workouts</string>
     <string name="workout_fragment_title">Edit Workout</string>
     <string name="workout_edit_text_hint">Enter Workout Title</string>
+    <string name="add_exercise_title">Exercise Rep\'s</string>
+    <string name="add_set_title">Exercise Sets</string>
 
     <!--    Default Exercise Titles     -->
     <string name="default_exercise_one">Push Up</string>
