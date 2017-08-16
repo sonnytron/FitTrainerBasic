@@ -17,8 +17,7 @@ import org.jetbrains.anko.support.v4.ctx
 class ExerciseListFragment: Fragment() {
 
     lateinit internal var ui: ExerciseListFragmentUi
-    internal var exerciseCount = 8
-    // TODO: Add plus and minus button to Exercise List Fragment
+    internal var exerciseCount: Long = 8
 
     internal var exerciseAdapter: ExerciseAdapter = ExerciseAdapter()
 
@@ -34,9 +33,7 @@ class ExerciseListFragment: Fragment() {
             ui.countTextView.text = exerciseCount.toString()
         }
     }
-
-    // TODO: Add long for count to target fragment activity result
-
+    
     internal fun decreaseCount() {
         if (exerciseCount > 0) {
             exerciseCount--
