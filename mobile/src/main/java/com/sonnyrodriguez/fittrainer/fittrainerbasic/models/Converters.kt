@@ -2,6 +2,7 @@ package com.sonnyrodriguez.fittrainer.fittrainerbasic.models
 
 import android.arch.persistence.room.TypeConverter
 import com.google.gson.Gson
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.values.ConverterConstants
 
 class Converters {
 
@@ -66,4 +67,39 @@ class Converters {
         }
         return returnList
     }
+
+    @TypeConverter
+    fun convertStringToExerciseList(gsonString: String): List<LocalExerciseObject> {
+        val returnList = ArrayList<LocalExerciseObject>()
+        val gson = Gson()
+        val objectStringArray = gsonString.split(ConverterConstants.OBJECT_SEPARATOR)
+        objectStringArray.forEach { totalObject ->
+            val firstValArray = totalObject.split(ConverterConstants.FIRST_VAL_SEPARATOR)
+            val title = firstValArray[0]
+            val secondValArray = firstValArray[1].split(ConverterConstants.SECOND_VAL_SEPARATOR)
+            val count = secondValArray[0]
+            val thirdValArray = secondValArray[1].split(ConverterConstants.THIRD_VAL_SEPARATOR)
+            val set = thirdValArray[0]
+            val exerciseId = thirdValArray[1]
+            returnList.add(LocalExerciseObject(title, count.toLong(), set.toLong(), exerciseId.toLong()))
+        }
+        return returnList
+    }
+
+    @TypeConverter
+    fun convertExerciseListToString(exerciseList: List<LocalExerciseObject>): String {
+        var convertedString = ""
+        val gson = Gson()
+        exerciseList.forEachIndexed { index, localExerciseObject ->
+            val countGson = gson.toJson(localExerciseObject.count)
+            val setGson = gson.toJson(localExerciseObject.set)
+            val idGson = gson.toJson(localExerciseObject.exerciseId)
+            val title = localExerciseObject.title
+            val objectString = "$title${ConverterConstants.FIRST_VAL_SEPARATOR}$countGson${ConverterConstants.SECOND_VAL_SEPARATOR}$setGson${ConverterConstants.THIRD_VAL_SEPARATOR}$idGson"
+            val stringToAdd = if (index == exerciseList.count() - 1) objectString else "$objectString${ConverterConstants.OBJECT_SEPARATOR}"
+            convertedString = "$convertedString$stringToAdd"
+        }
+        return convertedString
+    }
+
 }
