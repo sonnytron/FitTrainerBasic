@@ -17,7 +17,6 @@ import org.jetbrains.anko.support.v4.ctx
 class ExerciseListFragment: Fragment() {
 
     lateinit internal var ui: ExerciseListFragmentUi
-    internal var exerciseCount: Long = 8
     internal var exerciseAdapter: ExerciseAdapter = ExerciseAdapter()
 
     companion object {
@@ -29,23 +28,7 @@ class ExerciseListFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         ui = ExerciseListFragmentUi(exerciseAdapter)
         return ui.createView(AnkoContext.Companion.create(ctx, this)).apply {
-            ui.countTextView.text = exerciseCount.toString()
-        }
-    }
-
-    // TODO: Add long for count to target fragment activity result
-
-    internal fun decreaseCount() {
-        if (exerciseCount > 0) {
-            exerciseCount-=1
-            ui.countTextView.text = exerciseCount.toString()
-        }
-    }
-
-    internal fun increaseCount() {
-        if (exerciseCount < 65) {
-            exerciseCount+=1
-            ui.countTextView.text = exerciseCount.toString()
+            ui.updateCounts()
         }
     }
 
@@ -53,7 +36,8 @@ class ExerciseListFragment: Fragment() {
         targetFragment?.let { targetFrag ->
             val intent = Intent()
             intent.putExtra(KeyConstants.KEY_RESULT_KEY_LONG, exerciseObject.id)
-            intent.putExtra(KeyConstants.KEY_RESULT_LONG, exerciseCount)
+            intent.putExtra(KeyConstants.KEY_RESULT_LONG, ui.exerciseCount)
+            intent.putExtra(KeyConstants.KEY_RESULT_SET, ui.setCount)
             intent.putExtra(KeyConstants.KEY_RESULT_TEXT, exerciseObject.title)
             targetFrag.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent)
             fragmentManager.popBackStack()

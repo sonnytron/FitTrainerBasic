@@ -10,6 +10,7 @@ import com.sonnyrodriguez.fittrainer.fittrainerbasic.fragments.WorkoutFragment
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.NavPosition
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.active
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.disableShiftMode
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.replaceFragment
 import org.jetbrains.anko.toast
 
 class ExerciseActivity: AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
@@ -52,18 +53,12 @@ class ExerciseActivity: AppCompatActivity(), BottomNavigationView.OnNavigationIt
     }
 
     fun loadWorkoutFragment(): Boolean {
-        val workoutFragment = WorkoutFragment.newInstance()
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.container, workoutFragment)
-        }.commit()
+        replaceFragment(WorkoutFragment.newInstance())
         return true
     }
 
     fun loadExerciseFragment(): Boolean {
-        val exerciseFragment = ExerciseFragment.newInstance()
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.container, exerciseFragment)
-        }.commit()
+        replaceFragment(ExerciseFragment.newInstance())
         return true
     }
 

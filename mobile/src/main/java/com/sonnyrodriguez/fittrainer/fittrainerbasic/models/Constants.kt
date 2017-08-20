@@ -19,3 +19,10 @@ class MuscleConstants {
         val pecs = "Pectorals"
     }
 }
+
+class ConverterStrings {
+    companion object {
+        val amountSeparator = "_:_"
+        val entrySeparator ="__,__"
+    }
+}

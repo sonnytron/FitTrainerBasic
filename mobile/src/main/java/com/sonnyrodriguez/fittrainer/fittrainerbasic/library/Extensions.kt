@@ -4,6 +4,7 @@ import android.support.design.internal.BottomNavigationItemView
 import android.support.design.internal.BottomNavigationMenuView
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.NO_POSITION
 import android.util.Log
@@ -20,8 +21,24 @@ fun RecyclerView.ViewHolder.setOnItemClickedListener(listener: OnItemClickedList
 fun Fragment.addFragment(fragment: Fragment) {
     fragmentManager.beginTransaction()
             .add(R.id.container, fragment, fragment::class.java.simpleName)
+            .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
             .addToBackStack(fragment::class.java.simpleName)
             .hide(this)
+            .commit()
+}
+
+fun Fragment.replaceFragment(fragment: Fragment) {
+    fragmentManager.beginTransaction()
+            .replace(R.id.container, fragment, fragment::class.java.simpleName)
+            .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+            .hide(this)
+            .commit()
+}
+
+fun AppCompatActivity.replaceFragment(fragment: Fragment) {
+    supportFragmentManager.beginTransaction()
+            .replace(R.id.container, fragment, fragment::class.java.simpleName)
+            .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
             .commit()
 }
 

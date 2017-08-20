@@ -14,6 +14,7 @@ import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.addFragment
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.ExerciseFactory
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.ExerciseListObject
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.ExerciseSet
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.LocalExerciseObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.ExercisePresenter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.ExercisePresenterHelper
@@ -36,6 +37,7 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
     internal var localWorkout: WorkoutObject? = null
     internal val exerciseCountAdapter: ExerciseCountAdapter = ExerciseCountAdapter()
     internal var pendingLocalExercise: LocalExerciseObject? = null
+    internal var pendingExerciseSet: ExerciseSet? = null
 
     companion object {
         fun newInstance(workoutObject: WorkoutObject?) = EditWorkoutFragment().apply {
@@ -127,17 +129,36 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
                 when (requestCode) {
                     RequestConstants.ADD_EXERCISE_CONSTANT -> {
                         val exerciseId = getLongExtra(KeyConstants.KEY_RESULT_KEY_LONG, -1L)
-                        val exerciseCount = getLongExtra(KeyConstants.KEY_RESULT_LONG, 8)
+                        val exerciseCount = getLongExtra(KeyConstants.KEY_RESULT_LONG, 8L)
+                        val setCount = getLongExtra(KeyConstants.KEY_RESULT_SET, 1L)
                         val exerciseTitle = getStringExtra(KeyConstants.KEY_RESULT_TEXT)
-                        LocalExerciseObject(exerciseTitle, exerciseCount, exerciseId).let {
-                            pendingLocalExercise = it
-                            addExerciseToWorkout(it.exerciseId)
+                        if (setCount == 1L) {
+                            LocalExerciseObject(exerciseTitle, exerciseCount, exerciseId).let {
+                                pendingLocalExercise = it
+                                addExerciseToWorkout(it.exerciseId)
+                            }
+                        } else {
+                            addSetToWorkout(ExerciseSet(
+                                    LocalExerciseObject(exerciseTitle, exerciseCount, exerciseId),
+                                    setCount
+                            ))
                         }
                     }
                     else -> {
 
                     }
                 }
+            }
+        }
+    }
+
+    internal fun addSetToWorkout(exerciseSet: ExerciseSet) {
+        for (i in 0 until exerciseSet.setCount) {
+            LocalExerciseObject(exerciseSet.localExerciseObject.title,
+                    exerciseSet.localExerciseObject.count,
+                    exerciseSet.localExerciseObject.exerciseId).let {
+                pendingLocalExercise = it
+                addExerciseToWorkout(it.exerciseId)
             }
         }
     }

@@ -20,6 +20,16 @@ class KeyConstants {
         const val KEY_RESULT_TEXT = "keyResultText"
         const val KEY_RESULT_KEY_LONG = "keyResultKeyLong"
         const val KEY_RESULT_LONG = "keyResultLong"
+        const val KEY_RESULT_SET = "keyResultSet"
         const val KEY_RESULT_BOOLEAN = "keyResultBoolean"
+    }
+}
+
+class ConverterConstants {
+    companion object {
+        const val OBJECT_SEPARATOR = "__,__"
+        const val FIRST_VAL_SEPARATOR = "__:__"
+        const val SECOND_VAL_SEPARATOR = "__;__"
+        const val THIRD_VAL_SEPARATOR = "__~__"
     }
 }
