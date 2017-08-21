@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.sonnyrodriguez.fittrainer.fittrainerbasic.adapters.ExerciseAdapter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.adapters.ExerciseCountAdapter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.ExerciseObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutObject
@@ -38,11 +37,13 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
     internal val exerciseCountAdapter: ExerciseCountAdapter = ExerciseCountAdapter()
     internal var pendingLocalExercise: LocalExerciseObject? = null
     internal var pendingExerciseSet: ExerciseSet? = null
+    internal var isEditing = false
 
     companion object {
         fun newInstance(workoutObject: WorkoutObject?) = EditWorkoutFragment().apply {
             workoutObject?.let {
                 localWorkout = it
+                isEditing = true
             }
         }
     }
@@ -61,13 +62,8 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
             localWorkout?.let {
                 ui.updateUi(it)
                 ui.workoutTitle = it.title
-                getExercises(it)
             }
         }
-    }
-
-    internal fun getExercises(workoutObject: WorkoutObject) {
-        exerciseHelper.loadExercisesForWorkout(workoutObject)
     }
 
     override fun showTotalExercises(exercises: List<ExerciseObject>) {
@@ -89,8 +85,14 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
     override fun returnWorkoutExercise(workoutExercises: List<ExerciseObject>) {
         localWorkout?.let { workoutObject ->
             workoutExercises.forEach { exerciseObject ->
-                workoutObject.exerciseMap.entries.find { it.key == exerciseObject.id }.let { entry ->
-                    exerciseCountAdapter.add(ExerciseListObject(exerciseObject, entry?.value ?: 1), false)
+                workoutObject.exerciseMetaList.find { it.exerciseId == exerciseObject.id }.let { matchedObject ->
+                    // add to adapter
+                    matchedObject?.let {
+                        for (i in 0..it.set) {
+                            exerciseCountAdapter.add(ExerciseListObject(title = it.title, exerciseCount = it.count, exerciseId = it.exerciseId, muscleGroupNum = it.muscleGroup))
+                        }
+                        exerciseCountAdapter.notifyItemInserted(it.set.toInt() - 1)
+                    }
                 }
             }
             exerciseCountAdapter.notifyItemInserted(workoutExercises.count() - 1)
@@ -109,17 +111,8 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
         addFragment(ExerciseListFragment.newInstance(totalExerciseList), RequestConstants.ADD_EXERCISE_CONSTANT)
     }
 
-    internal fun addExerciseToWorkout(exerciseId: Long) {
-        exerciseHelper.findExerciseById(exerciseId)
-    }
-
     override fun returnExerciseFromSearch(exerciseObject: ExerciseObject) {
-        pendingLocalExercise?.let { localExerciseObject ->
-            if (localExerciseObject.exerciseId == exerciseObject.id) {
-                exerciseCountAdapter.add(ExerciseListObject(exerciseObject, localExerciseObject.count))
-            }
-        }
-        pendingLocalExercise = null
+        // might not need this
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -132,16 +125,11 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
                         val exerciseCount = getLongExtra(KeyConstants.KEY_RESULT_LONG, 8L)
                         val setCount = getLongExtra(KeyConstants.KEY_RESULT_SET, 1L)
                         val exerciseTitle = getStringExtra(KeyConstants.KEY_RESULT_TEXT)
-                        if (setCount == 1L) {
-                            LocalExerciseObject(exerciseTitle, exerciseCount, exerciseId).let {
-                                pendingLocalExercise = it
-                                addExerciseToWorkout(it.exerciseId)
-                            }
-                        } else {
-                            addSetToWorkout(ExerciseSet(
-                                    LocalExerciseObject(exerciseTitle, exerciseCount, exerciseId),
-                                    setCount
-                            ))
+                        val muscleNumber = getIntExtra(KeyConstants.KEY_RESULT_INT, 0)
+                        LocalExerciseObject(exerciseTitle, exerciseCount, setCount, exerciseId, muscleNumber).let {
+                            exerciseCountAdapter.add(ExerciseListObject(it.title, it.count, it.exerciseId, it.muscleGroup))
+                            addLocalExercisesToWorkout(it)
+                            addLocalExercisesToAdapter(it)
                         }
                     }
                     else -> {
@@ -152,13 +140,24 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
         }
     }
 
-    internal fun addSetToWorkout(exerciseSet: ExerciseSet) {
-        for (i in 0 until exerciseSet.setCount) {
-            LocalExerciseObject(exerciseSet.localExerciseObject.title,
-                    exerciseSet.localExerciseObject.count,
-                    exerciseSet.localExerciseObject.exerciseId).let {
-                pendingLocalExercise = it
-                addExerciseToWorkout(it.exerciseId)
+    internal fun addLocalExercisesToAdapter(newLocalExerciseObject: LocalExerciseObject) {
+        for (i in 0..newLocalExerciseObject.set) {
+            ExerciseListObject(newLocalExerciseObject.title, newLocalExerciseObject.count, newLocalExerciseObject.exerciseId, newLocalExerciseObject.muscleGroup).let { newListObject ->
+                exerciseCountAdapter.add(newListObject, false)
+            }
+        }
+        exerciseCountAdapter.notifyItemInserted(newLocalExerciseObject.set.toInt() - 1)
+    }
+
+    internal fun addLocalExercisesToWorkout(newLocalExerciseObject: LocalExerciseObject) {
+        if (localWorkout == null) {
+            localWorkout = WorkoutObject(ui.protectedWorkoutTitle(), listOf(newLocalExerciseObject))
+        } else {
+            localWorkout?.let {
+                val currentLocal = arrayListOf<LocalExerciseObject>()
+                currentLocal.addAll(it.exerciseMetaList)
+                currentLocal.add(newLocalExerciseObject)
+                it.exerciseMetaList = currentLocal.toList()
             }
         }
     }
@@ -173,19 +172,11 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
     }
 
     internal fun saveWorkoutAndExit() {
-        if (localWorkout == null) {
-            val newWorkoutMap = LinkedHashMap<Long, Long>()
-            exerciseCountAdapter.internalItemList.forEach { exerciseListObject ->
-                newWorkoutMap[exerciseListObject.exerciseObject.id] = exerciseListObject.exerciseCount
-            }
-            workoutHelper.addNewWorkout(ui.protectedWorkoutTitle(), newWorkoutMap)
-        } else {
-            localWorkout?.let {
-                it.title = ui.protectedWorkoutTitle()
-                exerciseCountAdapter.internalItemList.forEach { exerciseListObject ->
-                    it.exerciseMap[exerciseListObject.exerciseObject.id] = exerciseListObject.exerciseCount
-                }
-                workoutHelper.updateWorkout(it)
+        localWorkout?.let { workoutObject ->
+            if (isEditing) {
+                workoutHelper.updateWorkout(workoutObject)
+            } else {
+                workoutHelper.addNewWorkout(workoutObject)
             }
         }
     }

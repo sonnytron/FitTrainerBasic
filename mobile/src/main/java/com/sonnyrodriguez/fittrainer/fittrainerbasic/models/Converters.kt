@@ -77,11 +77,13 @@ class Converters {
             val firstValArray = totalObject.split(ConverterConstants.FIRST_VAL_SEPARATOR)
             val title = firstValArray[0]
             val secondValArray = firstValArray[1].split(ConverterConstants.SECOND_VAL_SEPARATOR)
-            val count = secondValArray[0]
+            val count = gson.fromJson(secondValArray[0], Long::class.java)
             val thirdValArray = secondValArray[1].split(ConverterConstants.THIRD_VAL_SEPARATOR)
-            val set = thirdValArray[0]
-            val exerciseId = thirdValArray[1]
-            returnList.add(LocalExerciseObject(title, count.toLong(), set.toLong(), exerciseId.toLong()))
+            val set = gson.fromJson(thirdValArray[0], Long::class.java)
+            val fourthValArray = thirdValArray[1].split(ConverterConstants.FOURTH_VAL_SEPARATOR)
+            val exerciseId = gson.fromJson(fourthValArray[0], Long::class.java)
+            val muscleInt = gson.fromJson(fourthValArray[1], Int::class.java)
+            returnList.add(LocalExerciseObject(title, count, set, exerciseId, muscleInt))
         }
         return returnList
     }
@@ -94,8 +96,9 @@ class Converters {
             val countGson = gson.toJson(localExerciseObject.count)
             val setGson = gson.toJson(localExerciseObject.set)
             val idGson = gson.toJson(localExerciseObject.exerciseId)
-            val title = localExerciseObject.title
-            val objectString = "$title${ConverterConstants.FIRST_VAL_SEPARATOR}$countGson${ConverterConstants.SECOND_VAL_SEPARATOR}$setGson${ConverterConstants.THIRD_VAL_SEPARATOR}$idGson"
+            val title = gson.toJson(localExerciseObject.title)
+            val muscle = gson.toJson(localExerciseObject.muscleGroup)
+            val objectString = "$title${ConverterConstants.FIRST_VAL_SEPARATOR}$countGson${ConverterConstants.SECOND_VAL_SEPARATOR}$setGson${ConverterConstants.THIRD_VAL_SEPARATOR}$idGson${ConverterConstants.FOURTH_VAL_SEPARATOR}$muscle"
             val stringToAdd = if (index == exerciseList.count() - 1) objectString else "$objectString${ConverterConstants.OBJECT_SEPARATOR}"
             convertedString = "$convertedString$stringToAdd"
         }

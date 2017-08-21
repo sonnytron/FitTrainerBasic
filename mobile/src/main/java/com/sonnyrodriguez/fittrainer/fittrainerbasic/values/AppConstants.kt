@@ -22,6 +22,7 @@ class KeyConstants {
         const val KEY_RESULT_LONG = "keyResultLong"
         const val KEY_RESULT_SET = "keyResultSet"
         const val KEY_RESULT_BOOLEAN = "keyResultBoolean"
+        const val KEY_RESULT_INT = "keyResultInt"
     }
 }
 
@@ -31,5 +32,6 @@ class ConverterConstants {
         const val FIRST_VAL_SEPARATOR = "__:__"
         const val SECOND_VAL_SEPARATOR = "__;__"
         const val THIRD_VAL_SEPARATOR = "__~__"
+        const val FOURTH_VAL_SEPARATOR = "__|__"
     }
 }

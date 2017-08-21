@@ -14,9 +14,9 @@ class ExerciseCountViewHolder(itemView: ViewGroup): RecyclerView.ViewHolder(item
     val exerciseCount: TextView = itemView.find(R.id.exercise_count_item_count)
 
     fun bind(exerciseListObject: ExerciseListObject) {
-        exerciseTitle.text = exerciseListObject.exerciseObject.title
+        exerciseTitle.text = exerciseListObject.title
         exerciseCount.text = exerciseListObject.exerciseCount.toString()
-        MuscleEnum.fromMuscleNumber(exerciseListObject.exerciseObject.muscleGroupNumber).let {
+        MuscleEnum.fromMuscleNumber(exerciseListObject.muscleGroupNum).let {
             exerciseMuscle.text = it.title
         }
     }

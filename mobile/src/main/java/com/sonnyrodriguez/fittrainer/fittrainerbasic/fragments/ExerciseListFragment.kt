@@ -41,6 +41,7 @@ class ExerciseListFragment: Fragment() {
             intent.putExtra(KeyConstants.KEY_RESULT_LONG, ui.exerciseCount)
             intent.putExtra(KeyConstants.KEY_RESULT_SET, ui.setCount)
             intent.putExtra(KeyConstants.KEY_RESULT_TEXT, exerciseObject.title)
+            intent.putExtra(KeyConstants.KEY_RESULT_INT, exerciseObject.muscleGroupNumber)
             targetFrag.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent)
             fragmentManager.popBackStack()
         }

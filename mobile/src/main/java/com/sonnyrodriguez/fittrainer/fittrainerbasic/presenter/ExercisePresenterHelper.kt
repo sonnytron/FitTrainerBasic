@@ -46,15 +46,6 @@ class ExercisePresenterHelper @Inject constructor(val exerciseDao: ExerciseDao) 
 
     }
 
-    fun loadExercisesForWorkout(workoutObject: WorkoutObject) {
-        compositeDisposable.add(exerciseDao.findExercisesByIds(workoutObject.exerciseMap.map { it.key }.toTypedArray())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    presenter?.returnWorkoutExercise(it)
-                }))
-    }
-
     fun showTotalExercises() {
         presenter?.showTotalExercises(exercises)
     }
