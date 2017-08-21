@@ -17,8 +17,6 @@ import org.jetbrains.anko.support.v4.ctx
 class ExerciseListFragment: Fragment() {
 
     lateinit internal var ui: ExerciseListFragmentUi
-
-
     internal var exerciseAdapter: ExerciseAdapter = ExerciseAdapter()
 
     companion object {
