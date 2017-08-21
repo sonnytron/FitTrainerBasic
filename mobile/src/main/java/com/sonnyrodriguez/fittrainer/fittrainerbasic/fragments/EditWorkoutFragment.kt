@@ -62,13 +62,13 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
             localWorkout?.let {
                 ui.updateUi(it)
                 ui.workoutTitle = it.title
+                addExercisesToAdapter()
             }
         }
     }
 
     override fun showTotalExercises(exercises: List<ExerciseObject>) {
         if (exercises.count() == 0) {
-            toast("Exercises List was empty! Creating default exercises.")
             buildDefaultExercises()
         } else {
             totalExerciseList.clear()
@@ -88,7 +88,7 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
                 workoutObject.exerciseMetaList.find { it.exerciseId == exerciseObject.id }.let { matchedObject ->
                     // add to adapter
                     matchedObject?.let {
-                        for (i in 0..it.set) {
+                        for (i in 1..it.set) {
                             exerciseCountAdapter.add(ExerciseListObject(title = it.title, exerciseCount = it.count, exerciseId = it.exerciseId, muscleGroupNum = it.muscleGroup))
                         }
                         exerciseCountAdapter.notifyItemInserted(it.set.toInt() - 1)
@@ -113,6 +113,21 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
 
     override fun returnExerciseFromSearch(exerciseObject: ExerciseObject) {
         // might not need this
+    }
+
+    internal fun addExercisesToAdapter() {
+        localWorkout?.let { localObject ->
+            localObject.exerciseMetaList.forEach { exerciseMeta ->
+                for (i in 1..exerciseMeta.set) {
+                    exerciseCountAdapter.add(ExerciseListObject(
+                            title = exerciseMeta.title,
+                            exerciseCount = exerciseMeta.count,
+                            exerciseId = exerciseMeta.exerciseId,
+                            muscleGroupNum = exerciseMeta.muscleGroup), false)
+                }
+                exerciseCountAdapter.notifyItemInserted(exerciseMeta.set.toInt() - 1)
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -141,7 +156,7 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
     }
 
     internal fun addLocalExercisesToAdapter(newLocalExerciseObject: LocalExerciseObject) {
-        for (i in 0..newLocalExerciseObject.set) {
+        for (i in 1..newLocalExerciseObject.set) {
             ExerciseListObject(newLocalExerciseObject.title, newLocalExerciseObject.count, newLocalExerciseObject.exerciseId, newLocalExerciseObject.muscleGroup).let { newListObject ->
                 exerciseCountAdapter.add(newListObject, false)
             }

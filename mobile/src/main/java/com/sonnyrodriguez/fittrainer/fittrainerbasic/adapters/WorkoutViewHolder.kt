@@ -6,6 +6,7 @@ import android.widget.TextView
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.FitTrainerApplication
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.R
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutObject
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.ExerciseFactory
 import org.jetbrains.anko.find
 
 class WorkoutViewHolder(itemView: ViewGroup) : RecyclerView.ViewHolder(itemView) {
@@ -14,6 +15,6 @@ class WorkoutViewHolder(itemView: ViewGroup) : RecyclerView.ViewHolder(itemView)
 
     fun bind(workoutObject: WorkoutObject) {
         workoutTitle.text = workoutObject.title
-        exerciseCount.text = FitTrainerApplication.instance.getString(R.string.workout_exercise_count_label, workoutObject.exerciseMetaList.count())
+        exerciseCount.text = FitTrainerApplication.instance.getString(R.string.workout_exercise_count_label, ExerciseFactory.exerciseCountFromWorkout(workoutObject))
     }
 }

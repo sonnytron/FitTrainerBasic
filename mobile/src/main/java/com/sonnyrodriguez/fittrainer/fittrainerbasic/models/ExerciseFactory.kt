@@ -3,6 +3,7 @@ package com.sonnyrodriguez.fittrainer.fittrainerbasic.models
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.FitTrainerApplication
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.R
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.ExerciseObject
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutObject
 
 class ExerciseFactory {
     companion object {
@@ -17,6 +18,14 @@ class ExerciseFactory {
                     ExerciseObject(FitTrainerApplication.instance.getString(R.string.default_exercise_seven), MuscleEnum.TRICEPS.ordinal),
                     ExerciseObject(FitTrainerApplication.instance.getString(R.string.default_exercise_eight), MuscleEnum.BACK.ordinal)
             )
+        }
+
+        fun exerciseCountFromWorkout(workoutObject: WorkoutObject): Int {
+            var initialCount = 0
+            workoutObject.exerciseMetaList.forEach {
+                initialCount += it.set.toInt()
+            }
+            return initialCount
         }
     }
 }
