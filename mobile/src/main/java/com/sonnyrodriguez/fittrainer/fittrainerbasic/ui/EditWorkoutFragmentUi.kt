@@ -1,33 +1,48 @@
 package com.sonnyrodriguez.fittrainer.fittrainerbasic.ui
 
-import android.graphics.Color
+import android.support.annotation.StringRes
 import android.support.design.widget.FloatingActionButton
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.view.Gravity
+import android.widget.Button
 import android.widget.EditText
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.R
-import com.sonnyrodriguez.fittrainer.fittrainerbasic.adapters.ExerciseAdapter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.adapters.ExerciseCountAdapter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.fragments.EditWorkoutFragment
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
-import org.jetbrains.anko.design.appBarLayout
 import org.jetbrains.anko.design.coordinatorLayout
 import org.jetbrains.anko.design.floatingActionButton
-import org.jetbrains.anko.design.textInputLayout
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 
-class EditWorkoutFragmentUi(val exerciseCountAdapter: ExerciseCountAdapter): AnkoComponent<EditWorkoutFragment> {
+class EditWorkoutFragmentUi(val exerciseCountAdapter: ExerciseCountAdapter, @StringRes val titleId: Int = R.string.workout_fragment_title): AnkoComponent<EditWorkoutFragment> {
 
     lateinit var exerciseRecyclerView: RecyclerView
     lateinit var workoutTitleEditText: EditText
-    lateinit var addExerciseButton: FloatingActionButton
     internal var workoutTitle: String = "Unnamed Workout"
+    lateinit internal var toolbar: Toolbar
+    lateinit internal var workoutActionButton: FloatingActionButton
+    lateinit internal var workoutMenuButton: Button
 
     override fun createView(ui: AnkoContext<EditWorkoutFragment>) = with(ui) {
         verticalLayout {
+            toolbar = toolbar {
+                setTitleTextColor(ContextCompat.getColor(ctx, R.color.colorPrimaryWhite))
+                backgroundColor = ContextCompat.getColor(ctx, R.color.colorPrimary)
+                setTitle(titleId)
+                workoutMenuButton = button(R.string.common_menu_edit) {
+                    setOnClickListener {
+                        owner.editOrSaveWorkout()
+                    }
+                }
+            }.lparams(width = matchParent, height = wrapContent) {
+
+            }
+
             lparams(width = matchParent, height = wrapContent)
             verticalLayout {
                 workoutTitleEditText = editText {
@@ -38,7 +53,7 @@ class EditWorkoutFragmentUi(val exerciseCountAdapter: ExerciseCountAdapter): Ank
                 }
                 button(R.string.common_save) {
                     setOnClickListener {
-                        owner.saveWorkoutAndExit()
+                        owner.saveWorkoutToDatabase()
                     }
                 }.lparams(width = matchParent, height = wrapContent) {
                     margin = dip(8)
@@ -52,11 +67,11 @@ class EditWorkoutFragmentUi(val exerciseCountAdapter: ExerciseCountAdapter): Ank
                     adapter = this@EditWorkoutFragmentUi.exerciseCountAdapter
                 }.lparams(width = matchParent, height = matchParent)
 
-                addExerciseButton = floatingActionButton {
+                workoutActionButton = floatingActionButton {
                     id = R.id.workout_add_exercise_button
                     setImageResource(R.drawable.icon_add_circle_black)
                     setOnClickListener {
-                        owner.addNewExercise()
+                        owner.workoutAction()
                     }
                 }.lparams(width = wrapContent, height = wrapContent) {
                     gravity = Gravity.BOTTOM or Gravity.END
@@ -70,10 +85,21 @@ class EditWorkoutFragmentUi(val exerciseCountAdapter: ExerciseCountAdapter): Ank
 
     internal fun updateUi(workoutObject: WorkoutObject) {
         workoutTitleEditText.setText(workoutObject.title)
+        toolbar.title = workoutObject.title
     }
 
     internal fun protectedWorkoutTitle(): String =
             workoutTitleEditText.text.toString().let {
-                if (it.length > 0) return it else return workoutTitle
+                if (it.isNotEmpty()) return it else return workoutTitle
             }
+
+    internal fun switchEditMode(editEnabled: Boolean) {
+        if (editEnabled) {
+            workoutMenuButton.textResource = R.string.common_menu_save
+            workoutActionButton.setImageResource(R.drawable.icon_add_circle_black)
+        } else {
+            workoutMenuButton.textResource = R.string.common_menu_edit
+            workoutActionButton.setImageResource(R.drawable.icon_play_black)
+        }
+    }
 }

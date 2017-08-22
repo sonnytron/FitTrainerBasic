@@ -39,6 +39,10 @@
     <string name="navigation_workout_title">Workouts</string>
     <string name="navigation_stats_title">Stats</string>
 
+    <!--    Common UI Strings      -->
+    <string name="common_menu_edit">Edit</string>
+    <string name="common_menu_save">Save</string>
+
     <!--    General Information Strings     -->
     <string name="stats_fragment_placeholder">The statistics feature will be implemented before release! Please stay tuned!</string>
 </resources>

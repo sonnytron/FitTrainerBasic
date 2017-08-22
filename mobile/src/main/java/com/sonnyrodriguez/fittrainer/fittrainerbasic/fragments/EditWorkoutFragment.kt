@@ -13,7 +13,6 @@ import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.addFragment
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.ExerciseFactory
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.ExerciseListObject
-import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.ExerciseSet
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.LocalExerciseObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.ExercisePresenter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.ExercisePresenterHelper
@@ -25,7 +24,7 @@ import com.sonnyrodriguez.fittrainer.fittrainerbasic.values.RequestConstants
 import dagger.android.support.AndroidSupportInjection
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.support.v4.ctx
-import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.support.v4.longToast
 import javax.inject.Inject
 
 class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
@@ -35,15 +34,12 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
     internal var totalExerciseList: ArrayList<ExerciseObject> = arrayListOf()
     internal var localWorkout: WorkoutObject? = null
     internal val exerciseCountAdapter: ExerciseCountAdapter = ExerciseCountAdapter()
-    internal var pendingLocalExercise: LocalExerciseObject? = null
-    internal var pendingExerciseSet: ExerciseSet? = null
     internal var isEditing = false
 
     companion object {
         fun newInstance(workoutObject: WorkoutObject?) = EditWorkoutFragment().apply {
             workoutObject?.let {
                 localWorkout = it
-                isEditing = true
             }
         }
     }
@@ -107,8 +103,14 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
 
     }
 
-    internal fun addNewExercise() {
-        addFragment(ExerciseListFragment.newInstance(totalExerciseList), RequestConstants.ADD_EXERCISE_CONSTANT)
+    internal fun workoutAction() {
+        if (isEditing) {
+            addFragment(ExerciseListFragment.newInstance(totalExerciseList), RequestConstants.ADD_EXERCISE_CONSTANT)
+        } else {
+            // play workout
+            longToast("The workout play action has been detected")
+        }
+
     }
 
     override fun returnExerciseFromSearch(exerciseObject: ExerciseObject) {
@@ -182,11 +184,11 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
             val intent = Intent()
             intent.putExtra(KeyConstants.KEY_RESULT_BOOLEAN, true)
             targetFrag.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent)
-            fragmentManager.popBackStack()
         }
+        ui.switchEditMode(false)
     }
 
-    internal fun saveWorkoutAndExit() {
+    internal fun saveWorkoutToDatabase() {
         localWorkout?.let { workoutObject ->
             if (isEditing) {
                 workoutHelper.updateWorkout(workoutObject)
@@ -194,5 +196,14 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
                 workoutHelper.addNewWorkout(workoutObject)
             }
         }
+    }
+
+    internal fun editOrSaveWorkout() {
+        if (isEditing) {
+            saveWorkoutToDatabase()
+        } else {
+            ui.switchEditMode(editEnabled = true)
+        }
+        isEditing = !isEditing
     }
 }
