@@ -1,5 +1,6 @@
 package com.sonnyrodriguez.fittrainer.fittrainerbasic.ui
 
+import android.content.res.ColorStateList
 import android.support.annotation.StringRes
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.content.ContextCompat
@@ -12,6 +13,7 @@ import android.view.Gravity
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.R
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.adapters.ExerciseCountAdapter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutObject
@@ -72,7 +74,10 @@ class EditWorkoutFragmentUi(val exerciseCountAdapter: ExerciseCountAdapter, @Str
 
                 workoutActionButton = floatingActionButton {
                     id = R.id.workout_add_exercise_button
+                    backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(ctx, R.color.colorPrimary))
                     setImageResource(R.drawable.icon_play_black)
+                    setColorFilter(ContextCompat.getColor(ctx, R.color.colorPrimaryWhite))
+                    scaleType = ImageView.ScaleType.CENTER
                     setOnClickListener {
                         owner.workoutAction()
                     }
@@ -99,7 +104,7 @@ class EditWorkoutFragmentUi(val exerciseCountAdapter: ExerciseCountAdapter, @Str
     internal fun switchEditMode(editEnabled: Boolean) {
         if (editEnabled) {
             workoutMenuButton.textResource = R.string.common_menu_save
-            workoutActionButton.setImageResource(R.drawable.icon_add_circle_black)
+            workoutActionButton.setImageResource(R.drawable.icon_add_black)
         } else {
             workoutMenuButton.textResource = R.string.common_menu_edit
             workoutActionButton.setImageResource(R.drawable.icon_play_black)

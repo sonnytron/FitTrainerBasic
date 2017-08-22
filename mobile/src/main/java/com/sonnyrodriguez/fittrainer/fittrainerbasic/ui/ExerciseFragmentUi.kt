@@ -1,5 +1,6 @@
 package com.sonnyrodriguez.fittrainer.fittrainerbasic.ui
 
+import android.content.res.ColorStateList
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -7,6 +8,7 @@ import android.support.v7.widget.Toolbar
 import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Spinner
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.R
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.adapters.ExerciseAdapter
@@ -43,7 +45,10 @@ class ExerciseFragmentUi(val exerciseListAdapter: ExerciseAdapter): AnkoComponen
                 }.lparams(width = matchParent, height = matchParent)
                 floatingActionButton {
                     id = R.id.exercise_add_exercise_button
-                    setImageResource(R.drawable.icon_add_circle_black)
+                    setImageResource(R.drawable.icon_add_black)
+                    backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(ctx, R.color.colorPrimary))
+                    setColorFilter(ContextCompat.getColor(ctx, R.color.colorPrimaryWhite))
+                    scaleType = ImageView.ScaleType.CENTER
                     setOnClickListener {
                         owner.addNewExercise()
                     }

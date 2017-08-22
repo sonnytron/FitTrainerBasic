@@ -1,10 +1,12 @@
 package com.sonnyrodriguez.fittrainer.fittrainerbasic.ui
 
+import android.content.res.ColorStateList
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Gravity
+import android.widget.ImageView
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.R
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.adapters.WorkoutAdapter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.fragments.WorkoutFragment
@@ -40,7 +42,10 @@ class WorkoutFragmentUi(val workoutListAdapter: WorkoutAdapter): AnkoComponent<W
 
                 floatingActionButton {
                     id = R.id.workout_add_workout_button
-                    setImageResource(R.drawable.icon_add_circle_black)
+                    backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(ctx, R.color.colorPrimary))
+                    setImageResource(R.drawable.icon_add_black)
+                    setColorFilter(ContextCompat.getColor(ctx, R.color.colorPrimaryWhite))
+                    scaleType = ImageView.ScaleType.CENTER
                     setOnClickListener {
                         owner.addNewWorkout()
                     }
