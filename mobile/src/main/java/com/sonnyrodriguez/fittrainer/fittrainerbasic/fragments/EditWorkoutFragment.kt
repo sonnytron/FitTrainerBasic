@@ -35,6 +35,7 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
     internal var localWorkout: WorkoutObject? = null
     internal val exerciseCountAdapter: ExerciseCountAdapter = ExerciseCountAdapter()
     internal var isEditing = false
+    internal var isNewWorkout = true
 
     companion object {
         fun newInstance(workoutObject: WorkoutObject?) = EditWorkoutFragment().apply {
@@ -56,6 +57,7 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
             workoutHelper.onCreate(this@EditWorkoutFragment)
             exerciseHelper.loadExercises()
             localWorkout?.let {
+                isNewWorkout = false
                 ui.updateUi(it)
                 ui.workoutTitle = it.title
                 addExercisesToAdapter()
@@ -144,7 +146,6 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
                         val exerciseTitle = getStringExtra(KeyConstants.KEY_RESULT_TEXT)
                         val muscleNumber = getIntExtra(KeyConstants.KEY_RESULT_INT, 0)
                         LocalExerciseObject(exerciseTitle, exerciseCount, setCount, exerciseId, muscleNumber).let {
-                            exerciseCountAdapter.add(ExerciseListObject(it.title, it.count, it.exerciseId, it.muscleGroup))
                             addLocalExercisesToWorkout(it)
                             addLocalExercisesToAdapter(it)
                         }
@@ -190,10 +191,10 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
 
     internal fun saveWorkoutToDatabase() {
         localWorkout?.let { workoutObject ->
-            if (isEditing) {
-                workoutHelper.updateWorkout(workoutObject)
-            } else {
+            if (isNewWorkout) {
                 workoutHelper.addNewWorkout(workoutObject)
+            } else {
+                workoutHelper.updateWorkout(workoutObject)
             }
         }
     }

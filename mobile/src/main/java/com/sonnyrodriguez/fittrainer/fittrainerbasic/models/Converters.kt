@@ -13,7 +13,7 @@ class Converters {
         val objectStringArray = gsonString.split(ConverterConstants.OBJECT_SEPARATOR)
         objectStringArray.forEach { totalObject ->
             val firstValArray = totalObject.split(ConverterConstants.FIRST_VAL_SEPARATOR)
-            val title = firstValArray[0]
+            val title = gson.fromJson(firstValArray[0], String::class.java)
             val secondValArray = firstValArray[1].split(ConverterConstants.SECOND_VAL_SEPARATOR)
             val count = gson.fromJson(secondValArray[0], Long::class.java)
             val thirdValArray = secondValArray[1].split(ConverterConstants.THIRD_VAL_SEPARATOR)

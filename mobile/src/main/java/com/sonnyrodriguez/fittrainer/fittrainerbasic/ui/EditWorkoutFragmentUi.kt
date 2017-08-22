@@ -6,7 +6,10 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.text.InputType
+import android.text.TextUtils
 import android.view.Gravity
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.R
@@ -30,6 +33,7 @@ class EditWorkoutFragmentUi(val exerciseCountAdapter: ExerciseCountAdapter, @Str
 
     override fun createView(ui: AnkoContext<EditWorkoutFragment>) = with(ui) {
         verticalLayout {
+            isFocusableInTouchMode = true
             toolbar = toolbar {
                 setTitleTextColor(ContextCompat.getColor(ctx, R.color.colorPrimaryWhite))
                 backgroundColor = ContextCompat.getColor(ctx, R.color.colorPrimary)
@@ -48,13 +52,12 @@ class EditWorkoutFragmentUi(val exerciseCountAdapter: ExerciseCountAdapter, @Str
                 workoutTitleEditText = editText {
                     id = R.id.workout_title_edit
                     hint = owner.getString(R.string.workout_edit_text_hint)
-                }.lparams(width = matchParent, height = wrapContent) {
-                    margin = dip(8)
-                }
-                button(R.string.common_save) {
-                    setOnClickListener {
-                        owner.saveWorkoutToDatabase()
-                    }
+                    maxLines = 1
+                    lines = 1
+                    ellipsize = TextUtils.TruncateAt.END
+                    imeOptions = EditorInfo.IME_ACTION_DONE
+                    inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+                    isFocusableInTouchMode = owner.isEditing
                 }.lparams(width = matchParent, height = wrapContent) {
                     margin = dip(8)
                 }
@@ -69,7 +72,7 @@ class EditWorkoutFragmentUi(val exerciseCountAdapter: ExerciseCountAdapter, @Str
 
                 workoutActionButton = floatingActionButton {
                     id = R.id.workout_add_exercise_button
-                    setImageResource(R.drawable.icon_add_circle_black)
+                    setImageResource(R.drawable.icon_play_black)
                     setOnClickListener {
                         owner.workoutAction()
                     }
@@ -101,5 +104,6 @@ class EditWorkoutFragmentUi(val exerciseCountAdapter: ExerciseCountAdapter, @Str
             workoutMenuButton.textResource = R.string.common_menu_edit
             workoutActionButton.setImageResource(R.drawable.icon_play_black)
         }
+        workoutTitleEditText.isFocusableInTouchMode = editEnabled
     }
 }
