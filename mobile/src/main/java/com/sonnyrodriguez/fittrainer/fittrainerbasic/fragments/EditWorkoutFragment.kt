@@ -61,6 +61,7 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
                 ui.updateUi(it)
                 ui.workoutTitle = it.title
                 addExercisesToAdapter()
+                ui.switchEditMode(false)
             }
         }
     }
@@ -112,7 +113,6 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
             // play workout
             longToast("The workout play action has been detected")
         }
-
     }
 
     override fun returnExerciseFromSearch(exerciseObject: ExerciseObject) {

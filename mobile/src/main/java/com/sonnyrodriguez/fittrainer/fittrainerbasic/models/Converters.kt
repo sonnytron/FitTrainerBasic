@@ -43,4 +43,49 @@ class Converters {
         return convertedString
     }
 
+    @TypeConverter
+    fun convertStringToStringList(gsonString: String): List<String> {
+        val returnList = ArrayList<String>()
+        val gson = Gson()
+        val objectStringArray = gsonString.split(ConverterConstants.OBJECT_SEPARATOR)
+        objectStringArray.forEach { internalString ->
+            returnList.add(gson.fromJson(internalString, String::class.java))
+        }
+        return returnList
+    }
+
+    @TypeConverter
+    fun convertStringListToString(stringList: List<String>): String {
+        var convertedString = ""
+        val gson = Gson()
+        stringList.forEachIndexed { index, stringValue ->
+            val stringToAdd = if (index == stringList.count() - 1)
+                gson.toJson(stringValue) else
+                "${gson.toJson(stringValue)}${ConverterConstants.OBJECT_SEPARATOR}"
+            convertedString = "$convertedString$stringToAdd"
+        }
+        return convertedString
+    }
+
+    @TypeConverter
+    fun convertStringToLongList(gsonString: String): List<Long> {
+        val returnList = ArrayList<Long>()
+        val gson = Gson()
+        gsonString.split(ConverterConstants.OBJECT_SEPARATOR).forEach { internalString ->
+            returnList.add(gson.fromJson(internalString, Long::class.java))
+        }
+        return returnList
+    }
+
+    @TypeConverter
+    fun convertLongListToString(longList: List<Long>): String {
+        var convertedString = ""
+        val gson = Gson()
+        longList.forEachIndexed { index, longValue ->
+            val stringToAdd = if (index == longList.count() - 1)
+                gson.toJson(longValue) else
+                "${gson.toJson(longValue)}${ConverterConstants.OBJECT_SEPARATOR}"
+        }
+        return convertedString
+    }
 }

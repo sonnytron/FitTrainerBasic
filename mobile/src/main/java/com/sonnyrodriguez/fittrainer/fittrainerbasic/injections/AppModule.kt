@@ -15,4 +15,5 @@ import dagger.Provides
 
     @Provides fun providesExerciseDao(database: ExerciseDatabase) = database.exerciseDao()
     @Provides fun providesWorkoutDao(database: ExerciseDatabase) = database.workoutDao()
+    @Provides fun providesHistoryDao(database: ExerciseDatabase) = database.historyDao()
 }

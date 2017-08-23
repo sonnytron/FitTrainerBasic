@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar
 import android.text.InputType
 import android.text.TextUtils
 import android.view.Gravity
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
@@ -44,26 +45,29 @@ class EditWorkoutFragmentUi(val exerciseCountAdapter: ExerciseCountAdapter, @Str
                     setOnClickListener {
                         owner.editOrSaveWorkout()
                     }
+                }.lparams(width = wrapContent, height = wrapContent) {
+                    horizontalPadding = dip(8)
+                    verticalPadding = dip(4)
+                    gravity = Gravity.END
                 }
             }.lparams(width = matchParent, height = wrapContent) {
-
+                gravity = Gravity.CENTER_HORIZONTAL
             }
 
             lparams(width = matchParent, height = wrapContent)
-            verticalLayout {
-                workoutTitleEditText = editText {
-                    id = R.id.workout_title_edit
-                    hint = owner.getString(R.string.workout_edit_text_hint)
-                    maxLines = 1
-                    lines = 1
-                    ellipsize = TextUtils.TruncateAt.END
-                    imeOptions = EditorInfo.IME_ACTION_DONE
-                    inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-                    isFocusableInTouchMode = owner.isEditing
-                }.lparams(width = matchParent, height = wrapContent) {
-                    margin = dip(8)
-                }
-            }.lparams(width = matchParent, height = wrapContent)
+            workoutTitleEditText = editText {
+                id = R.id.workout_title_edit
+                hint = owner.getString(R.string.workout_edit_text_hint)
+                maxLines = 1
+                lines = 1
+                ellipsize = TextUtils.TruncateAt.END
+                imeOptions = EditorInfo.IME_ACTION_DONE
+                inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+                isFocusableInTouchMode = owner.isEditing
+            }.lparams(width = matchParent, height = wrapContent) {
+                gravity = Gravity.CENTER_HORIZONTAL
+                margin = dip(8)
+            }
             coordinatorLayout {
                 exerciseRecyclerView = recyclerView {
                     id = R.id.workout_exercise_recycler
@@ -109,6 +113,8 @@ class EditWorkoutFragmentUi(val exerciseCountAdapter: ExerciseCountAdapter, @Str
             workoutMenuButton.textResource = R.string.common_menu_edit
             workoutActionButton.setImageResource(R.drawable.icon_play_black)
         }
+        toolbar.title = protectedWorkoutTitle()
+        workoutTitleEditText.visibility = if (editEnabled) View.VISIBLE else View.GONE
         workoutTitleEditText.isFocusableInTouchMode = editEnabled
     }
 }
