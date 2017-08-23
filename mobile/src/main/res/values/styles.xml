@@ -5,12 +5,11 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimaryWhite</item>
     </style>
 
     <style name="BasicListItemStyle">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">18px</item>
+        <item name="android:textSize">24px</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
 
@@ -18,6 +17,12 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20px</item>
         <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="BasicListItemTitle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">30px</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
 </resources>
