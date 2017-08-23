@@ -12,11 +12,9 @@ class ExerciseActivityUi: AnkoComponent<ExerciseActivity> {
         relativeLayout {
             bottomNavigationMenuView {
                 id = R.id.navigation_menu
-
             }
             bottomNavigationItemView {
                 id = R.id.navigation_menu
-
             }.lparams(width = matchParent, height = wrapContent) {
                 alignParentBottom()
             }

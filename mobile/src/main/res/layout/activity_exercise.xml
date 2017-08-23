@@ -7,13 +7,16 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/navigation_menu"></FrameLayout>
+        android:layout_above="@+id/navigation_menu"/>
 
     <android.support.design.widget.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/navigation_menu"
+        app:itemBackground="@color/colorPrimary"
+        app:itemIconTint="@drawable/navigation_button"
+        app:itemTextColor="@drawable/navigation_button"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/home"></android.support.design.widget.BottomNavigationView>
+        app:menu="@menu/home"/>
 
 </RelativeLayout>
