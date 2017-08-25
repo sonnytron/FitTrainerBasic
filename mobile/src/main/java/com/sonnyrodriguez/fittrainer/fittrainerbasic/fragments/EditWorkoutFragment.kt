@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.activities.WorkoutActivity
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.adapters.ExerciseCountAdapter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.ExerciseObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutObject
@@ -110,8 +111,17 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
         if (isEditing) {
             addFragment(ExerciseListFragment.newInstance(totalExerciseList), RequestConstants.ADD_EXERCISE_CONSTANT)
         } else {
-            // play workout
-            longToast("The workout play action has been detected")
+            startWorkout()
+        }
+    }
+
+    internal fun startWorkout() {
+        localWorkout?.let { workoutObject ->
+            val exerciseArrayList = ArrayList<LocalExerciseObject>()
+            exerciseArrayList.addAll(workoutObject.exerciseMetaList)
+            WorkoutActivity.newIntent(workoutObject.title, exerciseArrayList).apply {
+                startActivity(this)
+            }
         }
     }
 

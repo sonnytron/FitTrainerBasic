@@ -23,7 +23,6 @@ class StatsFragment: Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         ui = StatsFragmentUi()
         return ui.createView(AnkoContext.Companion.create(ctx, this))
     }

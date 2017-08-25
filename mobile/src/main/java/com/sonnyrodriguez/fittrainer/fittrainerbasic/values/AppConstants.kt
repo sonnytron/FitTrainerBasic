@@ -23,6 +23,9 @@ class KeyConstants {
         const val KEY_RESULT_SET = "keyResultSet"
         const val KEY_RESULT_BOOLEAN = "keyResultBoolean"
         const val KEY_RESULT_INT = "keyResultInt"
+        const val LOCAL_EXERCISE_LIST = "localExerciseList"
+        const val WORKOUT_TITLE_TEXT = "workoutTitleValue"
+        const val STRING_ARRAY_EXTRA = "stringArrayExtra"
     }
 }
 

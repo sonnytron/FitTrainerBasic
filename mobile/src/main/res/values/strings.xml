@@ -45,4 +45,8 @@
 
     <!--    General Information Strings     -->
     <string name="stats_fragment_placeholder">The statistics feature will be implemented before release! Please stay tuned!</string>
+
+    <!--    Workout Activity    -->
+    <string name="exercise_count_title">Exercises: %1$d</string>
+    <string name="exercise_muscle_title">Muscles: </string>
 </resources>
