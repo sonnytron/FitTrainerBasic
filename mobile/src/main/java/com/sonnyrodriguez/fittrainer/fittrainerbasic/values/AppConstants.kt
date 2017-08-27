@@ -26,6 +26,7 @@ class KeyConstants {
         const val LOCAL_EXERCISE_LIST = "localExerciseList"
         const val WORKOUT_TITLE_TEXT = "workoutTitleValue"
         const val STRING_ARRAY_EXTRA = "stringArrayExtra"
+        const val INTENT_WORKOUT_OBJECT = "intentWorkoutObject"
     }
 }
 

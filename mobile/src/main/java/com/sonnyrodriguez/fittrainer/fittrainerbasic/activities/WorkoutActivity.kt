@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.FitTrainerApplication
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.fragments.WorkoutStatusFragment
-import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.replaceFragment
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.replaceFragmentDSL
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.LocalExerciseObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.MuscleEnum
@@ -19,12 +19,12 @@ class WorkoutActivity: AppCompatActivity() {
 
     var completedWorkout = false
     var workoutTitle = ""
+    lateinit var workoutObject: WorkoutObject
 
     companion object {
-        fun newIntent(exerciseTitle: String, localExercises: ArrayList<LocalExerciseObject>): Intent {
+        fun newIntent(workoutObject: WorkoutObject): Intent {
             val intent = Intent(FitTrainerApplication.instance, WorkoutActivity::class.java)
-            intent.putParcelableArrayListExtra(KeyConstants.LOCAL_EXERCISE_LIST, localExercises)
-            intent.putExtra(KeyConstants.WORKOUT_TITLE_TEXT, exerciseTitle)
+            intent.putExtra(KeyConstants.INTENT_WORKOUT_OBJECT, workoutObject)
             return intent
         }
     }
@@ -32,10 +32,10 @@ class WorkoutActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FragmentContainerUi().setContentView(this)
+        workoutObject = intent.getParcelableExtra(KeyConstants.INTENT_WORKOUT_OBJECT)
         exercises.clear()
-        val exerciseList = intent.getParcelableArrayListExtra<LocalExerciseObject>(KeyConstants.LOCAL_EXERCISE_LIST)
-        exercises.addAll(exerciseList)
-        workoutTitle = intent.getStringExtra(KeyConstants.WORKOUT_TITLE_TEXT)
+        exercises.addAll(workoutObject.exerciseMetaList)
+        workoutTitle = workoutObject.title
         if (completedWorkout) {
             // show workout finished status
         } else {
@@ -49,8 +49,6 @@ class WorkoutActivity: AppCompatActivity() {
         limitedMuscles.addAll(
                 muscleTitles.filter { !limitedMuscles.contains(it) }
         )
-        replaceFragmentDSL(WorkoutStatusFragment.newInstance(workoutTitle = workoutTitle,
-                exerciseTitles = limitedMuscles))
+        replaceFragmentDSL(WorkoutStatusFragment.newInstance(workoutObject, this))
     }
-
 }

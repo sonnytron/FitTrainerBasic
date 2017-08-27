@@ -119,7 +119,7 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
         localWorkout?.let { workoutObject ->
             val exerciseArrayList = ArrayList<LocalExerciseObject>()
             exerciseArrayList.addAll(workoutObject.exerciseMetaList)
-            WorkoutActivity.newIntent(workoutObject.title, exerciseArrayList).apply {
+            WorkoutActivity.newIntent(workoutObject).apply {
                 startActivity(this)
             }
         }
