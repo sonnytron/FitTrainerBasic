@@ -42,6 +42,13 @@ fun AppCompatActivity.replaceFragment(fragment: Fragment) {
             .commit()
 }
 
+fun AppCompatActivity.replaceFragmentDSL(fragment: Fragment) {
+    supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment, fragment::class.java.simpleName)
+            .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+            .commit()
+}
+
 fun Fragment.addFragment(fragment: Fragment, requestCode: Int) {
     fragment.setTargetFragment(this, requestCode)
     addFragment(fragment)

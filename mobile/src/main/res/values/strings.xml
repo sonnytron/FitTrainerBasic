@@ -45,4 +45,15 @@
 
     <!--    General Information Strings     -->
     <string name="stats_fragment_placeholder">The statistics feature will be implemented before release! Please stay tuned!</string>
+
+    <!--    Workout Activity    -->
+    <string name="exercise_count_title">Exercises: %1$d</string>
+    <string name="exercise_muscle_title">Muscles: </string>
+    <string name="exercise_default_title">Start Exercise</string>
+    <string name="exercise_rep_count">Repetitions: %1$d</string>
+    <string name="exercise_start_workout">Start Workout</string>
+    <string name="exercise_finish_workout">Finish Workout</string>
+    <string name="exercise_completed_rep">Did It</string>
+    <string name="exercise_skipped_rep">Skipped It</string>
+    <string name="exercise_finished">Finish Now</string>
 </resources>

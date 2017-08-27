@@ -25,4 +25,16 @@
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
+    <style name="WorkoutTitle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">72px</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="WorkoutSubtitle">
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">30px</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
 </resources>

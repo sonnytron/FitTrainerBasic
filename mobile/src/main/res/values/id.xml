@@ -16,6 +16,7 @@
     <item name="general_toolbar_left" type="id" />
     <item name="general_toolbar_edit" type="id" />
     <item name="general_toolbar_save" type="id" />
+    <item name="fragment_container" type="id" />
 
     <!--    Workout Fragment Id's    -->
     <item name="workout_recycler_view" type="id" />
