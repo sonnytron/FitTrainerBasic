@@ -15,10 +15,12 @@ class StartWorkoutFragmentUi(var currentExercise: LocalExerciseObject? = null,
 
     lateinit var currentExerciseTitle: TextView
     lateinit var currentExerciseCount: TextView
+    lateinit var currentExerciseSet: TextView
     lateinit var exerciseImageView: ImageView
     lateinit var forwardAction: Button
     lateinit var backwardAction: Button
     lateinit var stopAction: Button
+    internal var currentSetCount = 0L
 
     override fun createView(ui: AnkoContext<StartWorkoutFragment>) = with(ui) {
         relativeLayout {
@@ -37,6 +39,12 @@ class StartWorkoutFragmentUi(var currentExercise: LocalExerciseObject? = null,
                 }
                 currentExerciseCount = themedTextView(R.style.WorkoutSubtitle) {
                     text = exerciseCountString()
+                }.lparams(width = matchParent, height = wrapContent) {
+                    horizontalMargin = dip(16)
+                    verticalMargin = dip(8)
+                }
+                currentExerciseSet = themedTextView(R.style.WorkoutSubtitle) {
+                    text = exerciseSetString()
                 }.lparams(width = matchParent, height = wrapContent) {
                     horizontalMargin = dip(16)
                     verticalMargin = dip(8)
@@ -83,6 +91,22 @@ class StartWorkoutFragmentUi(var currentExercise: LocalExerciseObject? = null,
             return FitTrainerApplication.instance.getString(R.string.exercise_rep_count, currentExercise?.count)
         } else {
             return FitTrainerApplication.instance.getString(R.string.exercise_default_title)
+        }
+    }
+
+    internal fun exerciseSetString(): String {
+        if (currentExercise != null) {
+            return FitTrainerApplication.instance.getString(R.string.exercise_set_count, currentExercise?.set)
+        } else {
+            return FitTrainerApplication.instance.getString(R.string.exercise_set_default_title)
+        }
+    }
+
+    internal fun updateUi() {
+        currentExercise?.let {
+            currentExerciseTitle.text = it.title
+            currentExerciseCount.text = exerciseCountString()
+            currentExerciseSet.text = exerciseSetString()
         }
     }
 }

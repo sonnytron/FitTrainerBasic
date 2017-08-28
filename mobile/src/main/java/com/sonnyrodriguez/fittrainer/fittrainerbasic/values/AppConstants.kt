@@ -12,6 +12,7 @@ class RequestConstants {
         const val ADD_WORKOUT_CONSTANT = 2
         const val NEW_EXERCISE_CONSTANT = 3
         const val EDIT_EXERCISE_CONSTANT = 4
+        const val INTENT_EXERCISE_LIST = 5
     }
 }
 
@@ -27,6 +28,8 @@ class KeyConstants {
         const val WORKOUT_TITLE_TEXT = "workoutTitleValue"
         const val STRING_ARRAY_EXTRA = "stringArrayExtra"
         const val INTENT_WORKOUT_OBJECT = "intentWorkoutObject"
+        const val INTENT_COMPLETED_EXERCISES = "intentCompletedExercises"
+        const val INTENT_COMPLETE_WORKOUT = "intentCompleteWorkout"
     }
 }
 

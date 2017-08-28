@@ -27,6 +27,15 @@ fun Fragment.addFragment(fragment: Fragment) {
             .commit()
 }
 
+fun Fragment.addFragmentDSL(fragment: Fragment) {
+    fragmentManager.beginTransaction()
+            .add(R.id.fragment_container, fragment, fragment::class.java.simpleName)
+            .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+            .addToBackStack(fragment::class.java.simpleName)
+            .hide(this)
+            .commit()
+}
+
 fun Fragment.replaceFragment(fragment: Fragment) {
     fragmentManager.beginTransaction()
             .replace(R.id.container, fragment, fragment::class.java.simpleName)
@@ -52,6 +61,11 @@ fun AppCompatActivity.replaceFragmentDSL(fragment: Fragment) {
 fun Fragment.addFragment(fragment: Fragment, requestCode: Int) {
     fragment.setTargetFragment(this, requestCode)
     addFragment(fragment)
+}
+
+fun Fragment.addFragmentDSL(fragment: Fragment, requestCode: Int) {
+    fragment.setTargetFragment(this, requestCode)
+    addFragmentDSL(fragment)
 }
 
 fun BottomNavigationView.disableShiftMode() {

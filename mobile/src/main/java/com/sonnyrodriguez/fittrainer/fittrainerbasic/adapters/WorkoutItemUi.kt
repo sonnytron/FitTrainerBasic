@@ -12,6 +12,7 @@ class WorkoutItemUi: AnkoComponent<ViewGroup> {
             backgroundDrawable = ContextCompat.getDrawable(ctx, R.drawable.list_background_white)
             lparams(width = matchParent, height = dimen(R.dimen.single_list_item_default_height)) {
                 horizontalMargin = dip(16)
+                topMargin = dip(6)
             }
             verticalLayout {
                 themedTextView(R.style.BasicListItemTitle) {

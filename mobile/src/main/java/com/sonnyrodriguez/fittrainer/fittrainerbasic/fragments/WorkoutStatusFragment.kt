@@ -1,5 +1,7 @@
 package com.sonnyrodriguez.fittrainer.fittrainerbasic.fragments
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -9,13 +11,16 @@ import android.view.ViewGroup
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.R
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.addFragment
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.addFragmentDSL
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.replaceFragmentDSL
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.LocalExerciseObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.MuscleEnum
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.ui.WorkoutStatusFragmentUi
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.values.KeyConstants
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.values.RequestConstants
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.support.v4.ctx
+import org.jetbrains.anko.support.v4.toast
 
 class WorkoutStatusFragment: Fragment() {
     internal lateinit var ui: WorkoutStatusFragmentUi
@@ -61,11 +66,25 @@ class WorkoutStatusFragment: Fragment() {
         workoutArrayList.addAll(localWorkout.exerciseMetaList)
         StartWorkoutFragment.newInstance(workoutArrayList,
                 localWorkout.title).apply {
-            appActivity.replaceFragmentDSL(this)
+            addFragmentDSL(this, RequestConstants.INTENT_EXERCISE_LIST)
         }
     }
 
     internal fun endWorkout() {
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            data?.run {
+                when (requestCode) {
+                    RequestConstants.INTENT_EXERCISE_LIST -> {
+                        val completedExercises: ArrayList<LocalExerciseObject> = getParcelableArrayListExtra(KeyConstants.INTENT_COMPLETED_EXERCISES)
+                        toast("You completed ${completedExercises.count()} exercises! Congratulations!")
+                    }
+                }
+            }
+        }
     }
 }

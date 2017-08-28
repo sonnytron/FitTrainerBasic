@@ -50,7 +50,9 @@
     <string name="exercise_count_title">Exercises: %1$d</string>
     <string name="exercise_muscle_title">Muscles: </string>
     <string name="exercise_default_title">Start Exercise</string>
+    <string name="exercise_set_default_title">Waiting for Sets</string>
     <string name="exercise_rep_count">Repetitions: %1$d</string>
+    <string name="exercise_set_count">Sets Left: %1$d</string>
     <string name="exercise_start_workout">Start Workout</string>
     <string name="exercise_finish_workout">Finish Workout</string>
     <string name="exercise_completed_rep">Did It</string>

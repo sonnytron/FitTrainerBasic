@@ -12,7 +12,7 @@ class ExerciseCountItemUi: AnkoComponent<ViewGroup> {
             backgroundDrawable = ContextCompat.getDrawable(ctx, R.drawable.list_background_white)
             lparams(width = matchParent, height = wrapContent) {
                 horizontalMargin = dip(8)
-                verticalPadding = dip(16)
+                verticalPadding = dip(8)
             }
             linearLayout {
                 verticalLayout {
