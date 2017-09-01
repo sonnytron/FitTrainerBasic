@@ -4,4 +4,6 @@ import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutHistoryObje
 
 interface HistoryPresenter {
     fun loadAllHistory(historyObjects: List<WorkoutHistoryObject>)
+
+    fun historySaved()
 }

@@ -9,12 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.R
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutHistoryObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutObject
-import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.addFragment
-import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.addFragmentDSL
-import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.replaceFragmentDSL
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.LocalExerciseObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.MuscleEnum
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.HistoryPresenter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.ui.WorkoutStatusFragmentUi
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.values.KeyConstants
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.values.RequestConstants
@@ -22,12 +21,11 @@ import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.toast
 
-class WorkoutStatusFragment: Fragment() {
+class WorkoutStatusFragment: Fragment(), HistoryPresenter {
     internal lateinit var ui: WorkoutStatusFragmentUi
 
     internal var localExercises = ArrayList<String>()
     internal lateinit var localWorkout: WorkoutObject
-    internal var workoutCompleted: Boolean = false
     internal lateinit var appActivity: AppCompatActivity
 
     companion object {
@@ -44,6 +42,14 @@ class WorkoutStatusFragment: Fragment() {
         return ui.createView(AnkoContext.Companion.create(ctx, this)).apply {
             loadExercises()
         }
+    }
+
+    override fun loadAllHistory(historyObjects: List<WorkoutHistoryObject>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun historySaved() {
+
     }
 
     internal fun loadExercises() {

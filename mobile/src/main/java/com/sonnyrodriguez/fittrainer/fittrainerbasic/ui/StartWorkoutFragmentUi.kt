@@ -148,6 +148,7 @@ class StartWorkoutFragmentUi(var currentExercise: LocalExerciseObject? = null,
         exerciseTitleText.text = FitTrainerApplication.instance.getString(R.string.exercise_status_complete)
         muscleCountText.text = FitTrainerApplication.instance.getString(R.string.exercise_status_set_count, completedSets)
         muscleGroupTextView.text = FitTrainerApplication.instance.getString(R.string.exercise_status_muscle_count, muscleGroups.count())
+        startAction.text = FitTrainerApplication.instance.getString(R.string.exercise_status_save_workout)
         workoutCompleted = withFinished
     }
 
@@ -174,5 +175,6 @@ class StartWorkoutFragmentUi(var currentExercise: LocalExerciseObject? = null,
         muscleGroupTextView.text = muscleGroupValue
         exerciseTitleText.text = title
         muscleCountText.text = muscleCountString
+        currentExerciseView.visibility = View.GONE
     }
 }

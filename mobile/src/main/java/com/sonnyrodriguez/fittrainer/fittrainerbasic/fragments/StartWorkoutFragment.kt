@@ -1,7 +1,5 @@
 package com.sonnyrodriguez.fittrainer.fittrainerbasic.fragments
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -9,15 +7,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.R
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutHistoryObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.LocalExerciseObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.MuscleEnum
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.HistoryPresenter
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.HistorySaveHelper
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.ui.StartWorkoutFragmentUi
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.values.KeyConstants
+import dagger.android.support.AndroidSupportInjection
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.support.v4.ctx
+import java.util.*
+import javax.inject.Inject
+import kotlin.collections.ArrayList
 
-class StartWorkoutFragment: Fragment() {
+class StartWorkoutFragment: Fragment(), HistoryPresenter {
 
     lateinit var ui: StartWorkoutFragmentUi
 
@@ -28,6 +33,11 @@ class StartWorkoutFragment: Fragment() {
     internal var currentWorkoutIndex = 0
     internal lateinit var appActivity: AppCompatActivity
 
+    var startTime: Long = 0L
+    var endTime: Long = 0L
+
+    @Inject lateinit var historySaveHelper: HistorySaveHelper
+
     companion object {
         fun newInstance(localWorkoutObject: WorkoutObject, appCompatActivity: AppCompatActivity) = StartWorkoutFragment().apply {
             val bundle = Bundle()
@@ -37,7 +47,13 @@ class StartWorkoutFragment: Fragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidSupportInjection.inject(this)
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        historySaveHelper.onCreate(this)
         localWorkoutObject = arguments.getParcelable(KeyConstants.INTENT_WORKOUT_OBJECT)
         ui = StartWorkoutFragmentUi(localWorkoutObject.exerciseMetaList.first(), localWorkoutObject.title)
         return ui.createView(AnkoContext.Companion.create(ctx, this)).apply {
@@ -127,87 +143,39 @@ class StartWorkoutFragment: Fragment() {
     }
 
     internal fun workoutFinished() {
+        endTime = Date().time
         ui.updateStatus(true, completedWorkouts.count())
-//
-//        targetFragment?.let { targetFrag ->
-//            val intent = Intent()
-//            intent.putParcelableArrayListExtra(KeyConstants.INTENT_COMPLETED_EXERCISES, completedWorkouts)
-//            targetFrag.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent)
-//            fragmentManager.popBackStack()
-//        }
     }
 
     internal fun workoutAction(withFinished: Boolean) {
         if (withFinished) {
-
+            saveWorkoutHistory()
         } else {
+            startTime = Date().time
             ui.currentExercise = localWorkouts.first()
             ui.updateUi()
         }
     }
 
-    /*
-        internal var localExercises = ArrayList<String>()
-    internal lateinit var localWorkout: WorkoutObject
-    internal var workoutCompleted: Boolean = false
-    internal lateinit var appActivity: AppCompatActivity
-
-    companion object {
-        fun newInstance(workoutObject: WorkoutObject, appCompatActivity: AppCompatActivity) = WorkoutStatusFragment().apply {
-            val bundle = Bundle()
-            bundle.putParcelable(KeyConstants.INTENT_WORKOUT_OBJECT, workoutObject)
-            appActivity = appCompatActivity
-            arguments = bundle
+    internal fun saveWorkoutHistory() {
+        val muscleGroups: ArrayList<Long> = arrayListOf()
+        val titleStrings: ArrayList<String> = arrayListOf()
+        val exerciseIds: ArrayList<Long> = arrayListOf()
+        completedWorkouts.forEach {
+            muscleGroups.add(it.muscleGroup.toLong())
+            titleStrings.add(it.title)
+            exerciseIds.add(it.exerciseId)
+        }
+        WorkoutHistoryObject(exerciseIds, titleStrings, muscleGroups, startTime, endTime, endTime - startTime).let {
+            historySaveHelper.saveWorkoutHistory(it)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        ui = WorkoutStatusFragmentUi()
-        return ui.createView(AnkoContext.Companion.create(ctx, this)).apply {
-            loadExercises()
-        }
+    override fun historySaved() {
+        appActivity.finish()
     }
 
-    internal fun loadExercises() {
-        localWorkout = arguments.getParcelable(KeyConstants.INTENT_WORKOUT_OBJECT)
-        localExercises.clear().apply {
-            localExercises.addAll(localWorkout.exerciseMetaList.map { it.title })
-        }
-        val muscleTitles = localWorkout.exerciseMetaList.map { MuscleEnum.fromMuscleNumber(it.muscleGroup).title }
-        val muscleArrayList: ArrayList<String> = arrayListOf()
-        muscleArrayList.addAll(
-                muscleTitles.filter { !muscleArrayList.contains(it) }
-        )
-        ui.muscleGroups.addAll(muscleArrayList)
-        val muscleCountText = ctx.getString(R.string.exercise_count_title, localExercises.count())
-        ui.setMuscleGroupText(title = localWorkout.title, muscleCountString = muscleCountText)
+    override fun loadAllHistory(historyObjects: List<WorkoutHistoryObject>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
-    internal fun startWorkout() {
-        val workoutArrayList = ArrayList<LocalExerciseObject>()
-        workoutArrayList.addAll(localWorkout.exerciseMetaList)
-        StartWorkoutFragment.newInstance(workoutArrayList,
-                localWorkout.title).apply {
-            addFragmentDSL(this, RequestConstants.INTENT_EXERCISE_LIST)
-        }
-    }
-
-    internal fun endWorkout() {
-
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            data?.run {
-                when (requestCode) {
-                    RequestConstants.INTENT_EXERCISE_LIST -> {
-                        val completedExercises: ArrayList<LocalExerciseObject> = getParcelableArrayListExtra(KeyConstants.INTENT_COMPLETED_EXERCISES)
-                        toast("You completed ${completedExercises.count()} exercises! Congratulations!")
-                    }
-                }
-            }
-        }
-    }
-     */
 }

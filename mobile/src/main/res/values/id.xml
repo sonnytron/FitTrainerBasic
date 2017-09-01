@@ -41,6 +41,12 @@
     <item name="add_set_plus_button" type="id" />
     <item name="add_set_minus_button" type="id" />
 
+    <!--    History Fragment Id's       -->
+    <item name="history_item_title" type="id"/>
+    <item name="history_item_count" type="id" />
+    <item name="history_item_completed" type="id" />
+    <item name="history_item_duration" type="id" />
+
     <!--    Edit Exercise Fragment  -->
     <item name="exercise_edit_title" type="id"/>
     <item name="exercise_edit_spinner" type="id"/>

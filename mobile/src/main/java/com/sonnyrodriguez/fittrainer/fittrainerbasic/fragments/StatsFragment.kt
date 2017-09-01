@@ -5,12 +5,20 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.adapters.HistoryAdapter
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutHistoryObject
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.HistoryPresenter
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.HistoryPresenterHelper
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.ui.StatsFragmentUi
 import dagger.android.support.AndroidSupportInjection
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.support.v4.ctx
+import javax.inject.Inject
 
-class StatsFragment: Fragment() {
+class StatsFragment: Fragment(), HistoryPresenter {
+
+    internal var historyAdapter = HistoryAdapter()
+    @Inject lateinit var historyPresenter: HistoryPresenterHelper
     lateinit var ui: StatsFragmentUi
 
     companion object {
@@ -23,7 +31,18 @@ class StatsFragment: Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        ui = StatsFragmentUi()
-        return ui.createView(AnkoContext.Companion.create(ctx, this))
+        historyPresenter.onCreate(this)
+        ui = StatsFragmentUi(historyAdapter)
+        return ui.createView(AnkoContext.Companion.create(ctx, this)).apply {
+            historyPresenter.loadAllHistory()
+        }
+    }
+
+    override fun loadAllHistory(historyObjects: List<WorkoutHistoryObject>) {
+        ui.historyAdapter.addAll(historyObjects)
+    }
+
+    override fun historySaved() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
