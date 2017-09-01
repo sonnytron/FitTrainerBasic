@@ -58,4 +58,7 @@
     <string name="exercise_completed_rep">Did It</string>
     <string name="exercise_skipped_rep">Skipped It</string>
     <string name="exercise_finished">Finish Now</string>
+    <string name="exercise_status_complete">Workout Finished</string>
+    <string name="exercise_status_set_count">%1$d Sets Completed</string>
+    <string name="exercise_status_muscle_count">%1$d Muscle Groups Targeted</string>
 </resources>

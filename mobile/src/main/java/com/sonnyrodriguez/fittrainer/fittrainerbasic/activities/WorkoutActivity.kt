@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.FitTrainerApplication
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutObject
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.fragments.StartWorkoutFragment
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.fragments.WorkoutStatusFragment
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.replaceFragmentDSL
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.LocalExerciseObject
@@ -49,6 +50,6 @@ class WorkoutActivity: AppCompatActivity() {
         limitedMuscles.addAll(
                 muscleTitles.filter { !limitedMuscles.contains(it) }
         )
-        replaceFragmentDSL(WorkoutStatusFragment.newInstance(workoutObject, this))
+        replaceFragmentDSL(StartWorkoutFragment.newInstance(workoutObject, this))
     }
 }

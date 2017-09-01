@@ -64,10 +64,7 @@ class WorkoutStatusFragment: Fragment() {
     internal fun startWorkout() {
         val workoutArrayList = ArrayList<LocalExerciseObject>()
         workoutArrayList.addAll(localWorkout.exerciseMetaList)
-        StartWorkoutFragment.newInstance(workoutArrayList,
-                localWorkout.title).apply {
-            addFragmentDSL(this, RequestConstants.INTENT_EXERCISE_LIST)
-        }
+
     }
 
     internal fun endWorkout() {
