@@ -169,12 +169,14 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
     }
 
     internal fun addLocalExercisesToAdapter(newLocalExerciseObject: LocalExerciseObject) {
+        val exerciseList: ArrayList<ExerciseListObject> = arrayListOf()
         for (i in 1..newLocalExerciseObject.set) {
             ExerciseListObject(newLocalExerciseObject.title, newLocalExerciseObject.count, newLocalExerciseObject.exerciseId, newLocalExerciseObject.muscleGroup).let { newListObject ->
-                exerciseCountAdapter.add(newListObject, false)
+                exerciseList.add(newListObject)
             }
         }
-        exerciseCountAdapter.notifyItemInserted(newLocalExerciseObject.set.toInt() - 1)
+        exerciseCountAdapter.addAll(exerciseList.toList())
+        ui.exerciseRecyclerView.smoothScrollToPosition(exerciseCountAdapter.itemCount - 1)
     }
 
     internal fun addLocalExercisesToWorkout(newLocalExerciseObject: LocalExerciseObject) {

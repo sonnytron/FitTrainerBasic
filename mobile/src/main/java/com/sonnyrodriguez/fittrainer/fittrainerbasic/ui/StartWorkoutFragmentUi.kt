@@ -1,5 +1,6 @@
 package com.sonnyrodriguez.fittrainer.fittrainerbasic.ui
 
+import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
@@ -38,90 +39,91 @@ class StartWorkoutFragmentUi(var currentExercise: LocalExerciseObject? = null,
     var muscleGroups: ArrayList<String> = arrayListOf()
 
     override fun createView(ui: AnkoContext<StartWorkoutFragment>) = with(ui) {
-        relativeLayout {
-            verticalLayout {
-                workoutStatusView = verticalLayout {
-                    exerciseTitleText = themedTextView(R.style.WorkoutTitle) {
-
-                    }
-                    muscleCountText = themedTextView(R.style.WorkoutSubtitle) {
-                        text = context.getString(R.string.exercise_count_title, 1)
-                    }
-                    muscleGroupTextView = themedTextView(R.style.WorkoutSubtitle) {
-                        text = context.getString(R.string.exercise_muscle_title)
-                    }
-                    startAction = button {
-                        text = ctx.getString(R.string.exercise_start_workout)
-                        setOnClickListener {
-                            owner.workoutAction(workoutCompleted)
-                        }
-                    }.lparams(width = matchParent, height = wrapContent) {
-                        horizontalMargin = dip(16)
-                        verticalMargin = dip(8)
+        verticalLayout {
+            workoutStatusView = verticalLayout {
+                exerciseTitleText = themedTextView(R.style.WorkoutTitle) {
+                }.lparams(width = matchParent, height = wrapContent) {
+                    gravity = Gravity.CENTER_HORIZONTAL
+                }
+                muscleCountText = themedTextView(R.style.WorkoutSubtitle) {
+                    text = context.getString(R.string.exercise_count_title, 1)
+                }
+                muscleGroupTextView = themedTextView(R.style.WorkoutSubtitle) {
+                    text = context.getString(R.string.exercise_muscle_title)
+                }
+                startAction = button {
+                    text = ctx.getString(R.string.exercise_start_workout)
+                    setOnClickListener {
+                        owner.workoutAction(workoutCompleted)
                     }
                 }.lparams(width = matchParent, height = wrapContent) {
                     horizontalMargin = dip(16)
+                    verticalMargin = dip(8)
                 }
-
-                currentExerciseView = verticalLayout {
-                    currentExerciseTitle = themedTextView(R.style.WorkoutTitle) {
-                        text = workoutTitle
-                    }.lparams(width = matchParent, height = wrapContent) {
-                        horizontalMargin = dip(12)
-                        verticalMargin = dip(8)
-                    }
-                    exerciseImageView = imageView {
-
-                    }.lparams(width = matchParent, height = wrapContent) {
-                        horizontalMargin = dip(16)
-                        verticalMargin = dip(8)
-                    }
-                    currentExerciseCount = themedTextView(R.style.WorkoutSubtitle) {
-                        text = exerciseCountString()
-                    }.lparams(width = matchParent, height = wrapContent) {
-                        horizontalMargin = dip(16)
-                        verticalMargin = dip(8)
-                    }
-                    currentExerciseSet = themedTextView(R.style.WorkoutSubtitle) {
-                        text = exerciseSetString()
-                    }.lparams(width = matchParent, height = wrapContent) {
-                        horizontalMargin = dip(16)
-                        verticalMargin = dip(8)
-                    }
-                    linearLayout {
-                        backwardAction = button {
-                            text = ctx.getString(R.string.exercise_skipped_rep)
-                            setOnClickListener {
-                                owner.backwardAction(currentExercise)
-                            }
-                        }.lparams(width = wrapContent, height = wrapContent) {
-                            rightMargin = dip(8)
-                        }
-                        forwardAction = button {
-                            text = ctx.getString(R.string.exercise_completed_rep)
-                            setOnClickListener {
-                                owner.forwardAction(currentExercise)
-                            }
-                        }.lparams(width = wrapContent, height = wrapContent) {
-                            gravity = Gravity.CENTER_HORIZONTAL
-                        }
-                    }.lparams(width = matchParent, height = wrapContent) {
-                        horizontalMargin = dip(16)
-                        verticalMargin = dip(8)
-                    }
-                    stopAction = button {
-                        text = ctx.getString(R.string.exercise_finished)
-                        setOnClickListener {
-                            owner.stopAction()
-                        }
-                    }.lparams(width = matchParent, height = wrapContent) {
-                        horizontalMargin = dip(16)
-                        verticalMargin = dip(8)
-                    }
-                }.lparams(width = matchParent, height = wrapContent)
             }.lparams(width = matchParent, height = wrapContent) {
-                centerHorizontally()
-                alignParentTop()
+                horizontalMargin = dip(16)
+                gravity = Gravity.CENTER_HORIZONTAL
+            }
+
+            currentExerciseView = verticalLayout {
+                currentExerciseTitle = themedTextView(R.style.WorkoutTitle) {
+                    text = workoutTitle
+                    backgroundColor = ContextCompat.getColor(ctx, android.R.color.holo_orange_dark)
+                }.lparams(width = matchParent, height = wrapContent) {
+                    horizontalMargin = dip(12)
+                    verticalMargin = dip(8)
+                    gravity = Gravity.CENTER
+                }
+                exerciseImageView = imageView {
+
+                }.lparams(width = matchParent, height = wrapContent) {
+                    horizontalMargin = dip(16)
+                    verticalMargin = dip(8)
+                }
+                currentExerciseCount = themedTextView(R.style.WorkoutSubtitle) {
+                    text = exerciseCountString()
+                }.lparams(width = matchParent, height = wrapContent) {
+                    horizontalMargin = dip(16)
+                    verticalMargin = dip(8)
+                }
+                currentExerciseSet = themedTextView(R.style.WorkoutSubtitle) {
+                    text = exerciseSetString()
+                }.lparams(width = matchParent, height = wrapContent) {
+                    horizontalMargin = dip(16)
+                    verticalMargin = dip(8)
+                }
+                linearLayout {
+                    backwardAction = button {
+                        text = ctx.getString(R.string.exercise_skipped_rep)
+                        setOnClickListener {
+                            owner.backwardAction(currentExercise)
+                        }
+                    }.lparams(width = wrapContent, height = wrapContent) {
+                        rightMargin = dip(8)
+                    }
+                    forwardAction = button {
+                        text = ctx.getString(R.string.exercise_completed_rep)
+                        setOnClickListener {
+                            owner.forwardAction(currentExercise)
+                        }
+                    }.lparams(width = wrapContent, height = wrapContent) {
+                        gravity = Gravity.CENTER_HORIZONTAL
+                    }
+                }.lparams(width = matchParent, height = wrapContent) {
+                    horizontalMargin = dip(16)
+                    verticalMargin = dip(8)
+                }
+                stopAction = button {
+                    text = ctx.getString(R.string.exercise_finished)
+                    setOnClickListener {
+                        owner.stopAction()
+                    }
+                }.lparams(width = matchParent, height = wrapContent) {
+                    horizontalMargin = dip(16)
+                    verticalMargin = dip(8)
+                }
+            }.lparams(width = matchParent, height = matchParent) {
+                gravity = Gravity.CENTER
             }
         }
     }
