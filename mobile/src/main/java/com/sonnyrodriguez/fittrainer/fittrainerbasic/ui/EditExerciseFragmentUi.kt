@@ -1,6 +1,5 @@
 package com.sonnyrodriguez.fittrainer.fittrainerbasic.ui
 
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner

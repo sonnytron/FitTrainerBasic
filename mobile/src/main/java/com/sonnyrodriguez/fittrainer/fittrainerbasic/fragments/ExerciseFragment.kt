@@ -24,7 +24,6 @@ class ExerciseFragment: Fragment(), ExercisePresenter {
 
     internal var exerciseAdapter: ExerciseAdapter = ExerciseAdapter()
 
-
     @Inject lateinit var exerciseHelper: ExercisePresenterHelper
 
     companion object {
