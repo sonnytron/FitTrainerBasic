@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.R
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutHistoryObject
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.LocalStatObject
 import org.jetbrains.anko.find
 
 class HistoryItemViewHolder(itemView: ViewGroup): RecyclerView.ViewHolder(itemView) {
@@ -14,10 +15,10 @@ class HistoryItemViewHolder(itemView: ViewGroup): RecyclerView.ViewHolder(itemVi
     val countLabel = itemView.find<TextView>(R.id.history_item_count)
     val durationLabel = itemView.find<TextView>(R.id.history_item_duration)
 
-    fun bind(historyObject: WorkoutHistoryObject) {
-        titleLabel.text = historyObject.names.first()
-        completedLabel.text = historyObject.exercises.count().toString()
-        countLabel.text = historyObject.muscles.count().toString()
-        durationLabel.text = historyObject.duration.toString()
+    fun bind(localStatObject: LocalStatObject) {
+        titleLabel.text = localStatObject.title
+        completedLabel.text = localStatObject.dateString
+        countLabel.text = localStatObject.totalExercisesString
+        durationLabel.text = localStatObject.durationString
     }
 }

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.adapters.HistoryAdapter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutHistoryObject
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.LocalStatObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.HistoryPresenter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.HistoryPresenterHelper
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.ui.StatsFragmentUi
@@ -39,7 +40,18 @@ class StatsFragment: Fragment(), HistoryPresenter {
     }
 
     override fun loadAllHistory(historyObjects: List<WorkoutHistoryObject>) {
-        ui.historyAdapter.addAll(historyObjects)
+        val statList: ArrayList<LocalStatObject> = arrayListOf()
+        historyObjects.forEach {
+            LocalStatObject(title = LocalStatObject.totalExercisesDone(it),
+                    dateString = LocalStatObject.dateCompleteString(it),
+                    totalExercisesString = LocalStatObject.totalCount(it),
+                    muscleGroups = LocalStatObject.musclesString(it),
+                    durationString = LocalStatObject.durationString(it))
+                    .apply {
+                        statList.add(this)
+                    }
+        }
+        ui.historyAdapter.addAll(statList)
     }
 
     override fun historySaved() {

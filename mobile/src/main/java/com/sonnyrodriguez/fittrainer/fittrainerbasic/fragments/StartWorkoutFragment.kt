@@ -29,6 +29,7 @@ class StartWorkoutFragment: Fragment(), HistoryPresenter {
     var localExercises: ArrayList<String> = arrayListOf()
     var completedWorkouts: ArrayList<LocalExerciseObject> = arrayListOf()
     var localWorkouts: ArrayList<LocalExerciseObject> = arrayListOf()
+    var muscles: ArrayList<Long> = arrayListOf()
     lateinit var localWorkoutObject: WorkoutObject
     internal var currentWorkoutIndex = 0
     internal lateinit var appActivity: AppCompatActivity

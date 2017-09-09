@@ -11,20 +11,31 @@ data class LocalStatObject(val title: String,
                            val muscleGroups: String,
                            val durationString: String) {
     companion object {
-        fun fromWorkoutHistory(workoutHistoryObject: WorkoutHistoryObject): LocalStatObject {
-            val dateOfWorkout = SimpleDateFormat("MM/dd/yyyy", Locale.US).format(Date(workoutHistoryObject.timeEnded))
-            val duration = "${TimeUnit.MILLISECONDS.toMinutes(workoutHistoryObject.duration)} minutes, ${TimeUnit.MILLISECONDS.toSeconds(workoutHistoryObject.duration)}"
+        fun durationString(workoutHistoryObject: WorkoutHistoryObject): String {
+            return "${TimeUnit.MILLISECONDS.toMinutes(workoutHistoryObject.duration)} minutes, ${TimeUnit.MILLISECONDS.toSeconds(workoutHistoryObject.duration)}"
+        }
+
+        fun dateCompleteString(workoutHistoryObject: WorkoutHistoryObject): String {
+            val dateDone = Date(workoutHistoryObject.timeStarted)
+            return SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(dateDone)
+        }
+
+        fun totalExercisesDone(workoutHistoryObject: WorkoutHistoryObject): String {
             var titles = ""
             workoutHistoryObject.names.forEach { titles = "${titles},$it" }
-            val total = "${workoutHistoryObject.exercises.count()} exercises"
+            return titles
+        }
+
+        fun musclesString(workoutHistoryObject: WorkoutHistoryObject): String {
             var muscles = ""
-            workoutHistoryObject.muscles.forEach { muscles = "$muscles,$it" }
-            return LocalStatObject(
-                    title = titles,
-                    dateString = dateOfWorkout,
-                    totalExercisesString = total,
-                    muscleGroups = muscles,
-                    durationString = duration)
+            workoutHistoryObject.muscles.forEach {
+                muscles = "${muscles},${MuscleEnum.fromMuscleNumber(it.toInt()).title}"
+            }
+            return muscles
+        }
+
+        fun totalCount(workoutHistoryObject: WorkoutHistoryObject): String {
+            return "${workoutHistoryObject.exercises.count()} exercises"
         }
     }
 }

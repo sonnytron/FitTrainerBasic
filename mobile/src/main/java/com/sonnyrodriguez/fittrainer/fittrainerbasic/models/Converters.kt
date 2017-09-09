@@ -85,6 +85,7 @@ class Converters {
             val stringToAdd = if (index == longList.count() - 1)
                 gson.toJson(longValue) else
                 "${gson.toJson(longValue)}${ConverterConstants.OBJECT_SEPARATOR}"
+            convertedString = "$convertedString$stringToAdd"
         }
         return convertedString
     }

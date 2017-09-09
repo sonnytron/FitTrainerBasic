@@ -4,9 +4,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.WorkoutHistoryObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.library.GymAdapter
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.LocalStatObject
 import org.jetbrains.anko.AnkoContext
 
-class HistoryAdapter: GymAdapter<WorkoutHistoryObject>() {
+class HistoryAdapter: GymAdapter<LocalStatObject>() {
 
     override fun onCreateInternalItemViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return HistoryItemViewHolder(HistoryItemUi().createView(AnkoContext.Companion.create(parent.context, parent)))
