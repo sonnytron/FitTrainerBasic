@@ -51,6 +51,7 @@
     <item name="exercise_edit_title" type="id"/>
     <item name="exercise_edit_spinner" type="id"/>
     <item name="exercise_edit_save" type="id"/>
+    <item name="exercise_edit_image_view" type="id" />
 
     <!--    Bottom Navigation Id's  -->
     <item name="navigation_menu" type="id" />
