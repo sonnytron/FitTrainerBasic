@@ -68,4 +68,6 @@ dependencies {
     compile "org.jetbrains.anko:anko-sdk19:$rootProject.versions.anko_version"
     compile "org.jetbrains.anko:anko-design:$rootProject.versions.anko_version"
     compile "org.jetbrains.anko:anko-percent:$rootProject.versions.anko_version"
+
+    compile "com.github.florent37:camerafragment:$rootProject.versions.camera_fragment_version"
 }

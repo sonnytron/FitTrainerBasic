@@ -12,7 +12,16 @@ data class LocalStatObject(val title: String,
                            val durationString: String) {
     companion object {
         fun durationString(workoutHistoryObject: WorkoutHistoryObject): String {
-            return "${TimeUnit.MILLISECONDS.toMinutes(workoutHistoryObject.duration)} minutes, ${TimeUnit.MILLISECONDS.toSeconds(workoutHistoryObject.duration)}"
+            val timeDifferenceInMs = Date(workoutHistoryObject.timeEnded).time - Date(workoutHistoryObject.timeStarted).time
+            val days = TimeUnit.MILLISECONDS.toDays(timeDifferenceInMs)
+            val hours = TimeUnit.MILLISECONDS.toHours(timeDifferenceInMs) - TimeUnit.DAYS.toHours(days)
+            val minutes = TimeUnit.MILLISECONDS.toMinutes(timeDifferenceInMs) - TimeUnit.HOURS.toMinutes(hours)
+            val seconds = TimeUnit.MILLISECONDS.toSeconds(timeDifferenceInMs) - TimeUnit.MINUTES.toSeconds(minutes)
+            if (minutes > 0) {
+                return "$minutes minutes, $seconds seconds"
+            } else {
+                return "$seconds seconds"
+            }
         }
 
         fun dateCompleteString(workoutHistoryObject: WorkoutHistoryObject): String {
@@ -22,7 +31,13 @@ data class LocalStatObject(val title: String,
 
         fun totalExercisesDone(workoutHistoryObject: WorkoutHistoryObject): String {
             var titles = ""
-            workoutHistoryObject.names.forEach { titles = "${titles},$it" }
+            workoutHistoryObject.names.forEachIndexed { index, titleString ->
+                if (index == 0) {
+                    titles = "$titleString"
+                } else {
+                    titles = "$titles, $titleString"
+                }
+            }
             return titles
         }
 

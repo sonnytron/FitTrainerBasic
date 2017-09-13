@@ -167,7 +167,7 @@ class StartWorkoutFragment: Fragment(), HistoryPresenter {
             titleStrings.add(it.title)
             exerciseIds.add(it.exerciseId)
         }
-        WorkoutHistoryObject(exerciseIds, titleStrings, muscleGroups, startTime, endTime, endTime - startTime).let {
+        WorkoutHistoryObject(exerciseIds, titleStrings, muscleGroups, startTime, endTime, Date(endTime).time - Date(startTime).time).let {
             historySaveHelper.saveWorkoutHistory(it)
         }
     }

@@ -16,6 +16,9 @@
     <string name="workout_exercise_count_label">%d Exercises</string>
     <string name="common_save">Save</string>
 
+    <!--    Edit Exercise UI    -->
+    <string name="exercise_images_title">Exercise Images</string>
+
     <!--    Strings for Add Workout Story    -->
     <string name="workout_add_button_title">Add Workout</string>
     <string name="workout_title">Workouts</string>
