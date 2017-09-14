@@ -59,4 +59,11 @@
     <item name="navigation_exercises_item" type="id" />
     <item name="navigation_workouts_item" type="id" />
     <item name="navigation_stats_item" type="id" />
+
+    <!--    Camera Activity         -->
+    <item name="camera_object" type="id" />
+    <item name="camera_activity_frame" type="id" />
+    <item name="camera_activity_shutter" type="id" />
+    <item name="camera_activity_flash" type="id" />
+    <item name="camera_activity_flash_status" type="id" />
 </resources>

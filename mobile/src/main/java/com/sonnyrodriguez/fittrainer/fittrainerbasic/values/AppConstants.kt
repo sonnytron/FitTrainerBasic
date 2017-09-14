@@ -28,6 +28,7 @@ class KeyConstants {
         const val WORKOUT_TITLE_TEXT = "workoutTitleValue"
         const val STRING_ARRAY_EXTRA = "stringArrayExtra"
         const val INTENT_WORKOUT_OBJECT = "intentWorkoutObject"
+        const val INTENT_EXERCISE_ID = "cameraIntentExerciseId"
         const val INTENT_COMPLETED_EXERCISES = "intentCompletedExercises"
         const val INTENT_COMPLETE_WORKOUT = "intentCompleteWorkout"
     }

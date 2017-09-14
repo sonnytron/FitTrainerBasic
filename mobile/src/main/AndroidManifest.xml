@@ -31,7 +31,7 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             />
-        <activity android:name=".activities.ExercisePhotoActivity"
+        <activity android:name=".activities.CameraActivity"
             android:exported="false"
             android:configChanges="orientation"
             android:screenOrientation="portrait"

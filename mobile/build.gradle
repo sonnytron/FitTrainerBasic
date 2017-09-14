@@ -70,4 +70,5 @@ dependencies {
     compile "org.jetbrains.anko:anko-percent:$rootProject.versions.anko_version"
 
     compile "com.github.florent37:camerafragment:$rootProject.versions.camera_fragment_version"
+    compile 'com.flurgle:camerakit:0.9.17'
 }

@@ -45,6 +45,9 @@
     <!--    Common UI Strings      -->
     <string name="common_menu_edit">Edit</string>
     <string name="common_menu_save">Save</string>
+    <string name="common_menu_on">On</string>
+    <string name="common_menu_off">Off</string>
+    <string name="common_menu_flash">Flash</string>
 
     <!--    General Information Strings     -->
     <string name="stats_fragment_placeholder">The statistics feature will be implemented before release! Please stay tuned!</string>
