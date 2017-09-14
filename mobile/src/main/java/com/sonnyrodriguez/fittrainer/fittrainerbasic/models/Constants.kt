@@ -1,11 +1,5 @@
 package com.sonnyrodriguez.fittrainer.fittrainerbasic.models
 
-class UiConstants {
-    companion object {
-
-    }
-}
-
 class MuscleConstants {
     companion object {
         val biceps = "Biceps"
