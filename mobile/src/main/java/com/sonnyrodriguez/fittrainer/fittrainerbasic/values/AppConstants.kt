@@ -40,6 +40,7 @@ class UIConstants {
         const val FILE_PATH_SEPARATOR = "/"
         const val FILE_INTERMEDIATE_NAME = "exercise_image.png"
         const val DEFAULT_IMAGE_QUALITY = 100
+        const val DEFAULT_FILE_PATH_VALUE_BAR = "_"
     }
 }
 

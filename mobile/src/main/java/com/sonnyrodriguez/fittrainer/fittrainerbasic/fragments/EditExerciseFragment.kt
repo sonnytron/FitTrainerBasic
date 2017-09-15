@@ -24,6 +24,7 @@ class EditExerciseFragment: Fragment(), SingleExercisePresenter {
     lateinit var ui: EditExerciseFragmentUi
     lateinit var muscleAdapter: ArrayAdapter<MuscleEnum>
     internal var internalExerciseObject: ExerciseObject? = null
+    var imageList: ArrayList<String> = arrayListOf()
 
     @Inject lateinit var exercisePresenterHelper: ExercisePresenterHelper
 
@@ -70,7 +71,7 @@ class EditExerciseFragment: Fragment(), SingleExercisePresenter {
 
     internal fun saveExercise() {
         if (internalExerciseObject == null) {
-            ExerciseObject(ui.exerciseTitleEdit.text.toString(), muscleAdapter.getItem(ui.muscleSpinner.selectedItemPosition).ordinal).apply {
+            ExerciseObject(ui.exerciseTitleEdit.text.toString(), muscleAdapter.getItem(ui.muscleSpinner.selectedItemPosition).ordinal, imageList).apply {
                 exercisePresenterHelper.addNewExercise(this)
             }
         } else {

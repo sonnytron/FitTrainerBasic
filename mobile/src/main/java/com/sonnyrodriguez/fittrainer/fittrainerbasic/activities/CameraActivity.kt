@@ -13,15 +13,27 @@ import com.sonnyrodriguez.fittrainer.fittrainerbasic.FitTrainerApplication
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.R
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.values.KeyConstants
 import com.flurgle.camerakit.CameraView
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.ExerciseObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.file.PhotoFileManager
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.LocalExerciseObject
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.ExercisePresenterHelper
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.SingleExercisePresenter
+import com.sonnyrodriguez.fittrainer.fittrainerbasic.values.UIConstants
+import dagger.android.AndroidInjection
 import org.jetbrains.anko.find
+import javax.inject.Inject
 
-class CameraActivity: AppCompatActivity() {
+class CameraActivity: AppCompatActivity(), SingleExercisePresenter {
 
     var fileManager: PhotoFileManager? = null
+    var exerciseSavedString: String? = null
+
+    lateinit var localExerciseObject: LocalExerciseObject
 
     var exerciseId: Long = 0L
     var exerciseIndex: Int = 0
+
+    @Inject lateinit var exercisePresenterHelper: ExercisePresenterHelper
 
     val exercisePhotoPath: String by lazy {
         val externalDirectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -40,24 +52,28 @@ class CameraActivity: AppCompatActivity() {
             super.onPictureTaken(jpeg)
             jpeg?.let {
                 val rawBitmap: Bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
+                fileManager?.let { fileMan ->
+                    fileMan.createImagePath(rawBitmap, filePathString()).apply {
+                        exerciseSavedString = this
+                    }
+                }
             }
         }
     }
 
     companion object {
-        fun newIntent(exerciseId: Long, index: Int): Intent {
+        fun newIntent(exerciseObject: ExerciseObject): Intent {
             val intent = Intent(FitTrainerApplication.instance, CameraActivity::class.java)
-            intent.putExtra(KeyConstants.INTENT_EXERCISE_ID, exerciseId)
-            intent.putExtra(KeyConstants.INTENT_EXERCISE_INDEX, index)
+            intent.putExtra(KeyConstants.INTENT_EXERCISE_INDEX, exerciseObject)
             return intent
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState, persistentState)
         setContentView(R.layout.camera_activity)
-        exerciseId = intent.getLongExtra(KeyConstants.INTENT_EXERCISE_ID, 0L)
-        exerciseIndex = intent.getIntExtra(KeyConstants.INTENT_EXERCISE_INDEX, 0)
+        localExerciseObject = intent.getParcelableExtra(KeyConstants.INTENT_EXERCISE_INDEX)
         initializeCamera()
     }
 
@@ -69,6 +85,7 @@ class CameraActivity: AppCompatActivity() {
         fileManager = PhotoFileManager(exercisePhotoPath)
         camera?.start()
         camera?.setCameraListener(cameraListener)
+        exercisePresenterHelper.onCreate(this)
     }
 
     override fun onResume() {
@@ -79,5 +96,24 @@ class CameraActivity: AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         camera?.stop()
+    }
+
+    internal fun setValueForResult(valueString: String) {
+
+        /*
+            targetFragment?.let { targetFrag ->
+            val intent = Intent()
+            intent.putExtra(KeyConstants.KEY_RESULT_BOOLEAN, true)
+            targetFrag.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent)
+            fragmentManager.popBackStack()
+        }
+         */
+    }
+
+    internal fun filePathString(): String =
+            "$exerciseId${UIConstants.DEFAULT_FILE_PATH_VALUE_BAR}$exerciseIndex${UIConstants.DEFAULT_FILE_PATH_VALUE_BAR}${UIConstants.FILE_INTERMEDIATE_NAME}"
+
+    override fun singleExerciseSaved() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

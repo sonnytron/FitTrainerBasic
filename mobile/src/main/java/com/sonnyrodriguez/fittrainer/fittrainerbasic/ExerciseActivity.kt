@@ -65,11 +65,6 @@ class ExerciseActivity: AppCompatActivity(), BottomNavigationView.OnNavigationIt
     fun loadStatsFragment(): Boolean {
         replaceFragment(StatsFragment.newInstance())
         return true
-//        val statsFragment = StatsFragment.newInstance()
-//        supportFragmentManager.beginTransaction().apply {
-//            replace(R.id.container, statsFragment)
-//        }.commit()
-//        return true
     }
 
     internal fun restoreSavedInstanceState(savedInstanceState: Bundle?) {

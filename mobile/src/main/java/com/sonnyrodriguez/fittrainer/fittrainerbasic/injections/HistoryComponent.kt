@@ -9,7 +9,6 @@ import dagger.android.AndroidInjector
     @Subcomponent.Builder abstract class Builder: AndroidInjector.Builder<StatsFragment>()
 }
 
-
 @Subcomponent interface StatusComponent: AndroidInjector<StartWorkoutFragment> {
     @Subcomponent.Builder abstract class Builder: AndroidInjector.Builder<StartWorkoutFragment>()
 }
