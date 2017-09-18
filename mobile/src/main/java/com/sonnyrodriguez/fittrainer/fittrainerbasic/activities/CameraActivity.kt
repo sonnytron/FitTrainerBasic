@@ -15,7 +15,6 @@ import com.sonnyrodriguez.fittrainer.fittrainerbasic.values.KeyConstants
 import com.flurgle.camerakit.CameraView
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.database.ExerciseObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.file.PhotoFileManager
-import com.sonnyrodriguez.fittrainer.fittrainerbasic.models.LocalExerciseObject
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.ExercisePresenterHelper
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.presenter.SingleExercisePresenter
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.values.UIConstants
@@ -27,8 +26,9 @@ class CameraActivity: AppCompatActivity(), SingleExercisePresenter {
 
     var fileManager: PhotoFileManager? = null
     var exerciseSavedString: String? = null
+    var localImages: ArrayList<String> = arrayListOf()
 
-    lateinit var localExerciseObject: LocalExerciseObject
+    lateinit var localExerciseObject: ExerciseObject
 
     var exerciseId: Long = 0L
     var exerciseIndex: Int = 0
@@ -53,8 +53,10 @@ class CameraActivity: AppCompatActivity(), SingleExercisePresenter {
             jpeg?.let {
                 val rawBitmap: Bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
                 fileManager?.let { fileMan ->
-                    fileMan.createImagePath(rawBitmap, filePathString()).apply {
-                        exerciseSavedString = this
+                    fileMan.ensurePhotoPath().apply {
+                        fileMan.createImagePath(rawBitmap, filePathString()).apply {
+                            setValueForResult(this)
+                        }
                     }
                 }
             }
@@ -81,7 +83,7 @@ class CameraActivity: AppCompatActivity(), SingleExercisePresenter {
         camera = find(R.id.camera_object)
         shutterButton = find(R.id.camera_activity_shutter)
         flashButton = find(R.id.camera_activity_flash)
-
+        localImages.addAll(localExerciseObject.imageList)
         fileManager = PhotoFileManager(exercisePhotoPath)
         camera?.start()
         camera?.setCameraListener(cameraListener)
@@ -99,21 +101,15 @@ class CameraActivity: AppCompatActivity(), SingleExercisePresenter {
     }
 
     internal fun setValueForResult(valueString: String) {
-
-        /*
-            targetFragment?.let { targetFrag ->
-            val intent = Intent()
-            intent.putExtra(KeyConstants.KEY_RESULT_BOOLEAN, true)
-            targetFrag.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent)
-            fragmentManager.popBackStack()
-        }
-         */
+        localImages.add(valueString)
+        localExerciseObject.imageList = localImages
+        exercisePresenterHelper.saveSingleExercise(localExerciseObject)
     }
 
     internal fun filePathString(): String =
             "$exerciseId${UIConstants.DEFAULT_FILE_PATH_VALUE_BAR}$exerciseIndex${UIConstants.DEFAULT_FILE_PATH_VALUE_BAR}${UIConstants.FILE_INTERMEDIATE_NAME}"
 
     override fun singleExerciseSaved() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        finish()
     }
 }

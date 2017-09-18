@@ -78,7 +78,7 @@ class EditWorkoutFragment: Fragment(), ExercisePresenter, WorkoutSavePresenter {
 
     internal fun buildDefaultExercises() {
         ExerciseFactory.defaultExercises().forEach {
-            exerciseHelper.addNewExercise(it.title, it.muscleGroupNumber)
+            exerciseHelper.addNewExercise(it.title, it.muscleGroupNumber, it.imageList)
         }
     }
 

@@ -1,10 +1,13 @@
 package com.sonnyrodriguez.fittrainer.fittrainerbasic.file
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import com.sonnyrodriguez.fittrainer.fittrainerbasic.values.UIConstants
 import java.io.File
+import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
+import io.reactivex.Observable
 
 open class PhotoFileManager(val root: String) {
     val photoFilePath: String
@@ -21,6 +24,11 @@ open class PhotoFileManager(val root: String) {
         }
         return tempImageFile.absolutePath
     }
+
+    fun imageStream(filename: String) = Observable.fromCallable { downloadImage(filename) }
+
+    internal fun downloadImage(filename: String): Bitmap =
+            BitmapFactory.decodeStream(FileInputStream(filename))
 
     fun ensurePhotoPath() {
         ensureFolderExists(photoFilePath)

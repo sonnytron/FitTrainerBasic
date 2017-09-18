@@ -42,7 +42,25 @@ class EditExerciseFragmentUi: AnkoComponent<EditExerciseFragment> {
 
             imageContainer = linearLayout {
                 id = R.id.exercise_edit_image_view
+                firstImage = imageView {
+
+                }.lparams(width = dimen(R.dimen.exercise_edit_image_dim), height = dimen(R.dimen.exercise_edit_image_dim))
+                secondImage = imageView {
+
+                }.lparams(width = dimen(R.dimen.exercise_edit_image_dim), height = dimen(R.dimen.exercise_edit_image_dim))
+                thirdImage = imageView {
+
+                }.lparams(width = dimen(R.dimen.exercise_edit_image_dim), height = dimen(R.dimen.exercise_edit_image_dim))
             }.lparams(width = matchParent, height = dimen(R.dimen.exercise_edit_image_dim) + dip(32))
+
+            button("Add Exercise Image") {
+                setOnClickListener {
+                    owner.openCamera()
+                }
+            }.lparams(width = matchParent, height = wrapContent) {
+                horizontalMargin = dip(8)
+                verticalMargin = dip(4)
+            }
 
             saveButton = button {
                 id = R.id.exercise_edit_save

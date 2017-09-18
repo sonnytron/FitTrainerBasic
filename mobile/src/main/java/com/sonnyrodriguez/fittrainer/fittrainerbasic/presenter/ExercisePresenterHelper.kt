@@ -50,8 +50,8 @@ class ExercisePresenterHelper @Inject constructor(val exerciseDao: ExerciseDao) 
         presenter?.showTotalExercises(exercises)
     }
 
-    fun addNewExercise(exerciseTitle: String, muscleGroupNumber: Int) {
-        val newExercise = ExerciseObject(title = exerciseTitle, muscleGroupNumber = muscleGroupNumber)
+    fun addNewExercise(exerciseTitle: String, muscleGroupNumber: Int, imageList: List<String>) {
+        val newExercise = ExerciseObject(title = exerciseTitle, muscleGroupNumber = muscleGroupNumber, imageList = imageList)
         compositeDisposable.add(Observable.fromCallable { exerciseDao.insertExercise(newExercise) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
